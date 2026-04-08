@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import { getStore } from '@netlify/blobs';
 
 const DATA_STORE_NAME = 'subham-admin-data';
