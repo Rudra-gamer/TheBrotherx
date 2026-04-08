@@ -1,11 +1,11 @@
 # Subham Prusty Films
 
-Netlify-ready portfolio app with an admin panel for pricing, categories, videos, and inquiry management.
+Netlify-ready portfolio app with a management dashboard for pricing, categories, videos, and inquiry management.
 
 ## Source files
 
 - Public homepage source: `index.html`
-- Admin page source: `admin/index.html`
+- Dashboard page source: `admin/index.html`
 - Seed content: `data/content.json`
 - Netlify Functions: `netlify/functions/`
 
@@ -42,7 +42,7 @@ These are already configured in `netlify.toml`.
 ### Required Netlify environment variables
 
 - `APP_ORIGIN=https://your-domain.example`
-- `ADMIN_USERNAME=admin`
+- `ADMIN_USERNAME=<use-a-unique-login-name>`
 - `ADMIN_PASSWORD=<strong password>`
 - `SESSION_SECRET=<long random secret>`
 - `CLOUDINARY_CLOUD_NAME=<your cloud name>`
@@ -51,11 +51,15 @@ These are already configured in `netlify.toml`.
 
 Optional:
 
-- `CLOUDINARY_UPLOAD_FOLDER=subham-films`
-- `MAX_UPLOAD_BYTES=104857600`
+- `CLOUDINARY_UPLOAD_FOLDER=<optional-folder-name>`
+- `MAX_UPLOAD_BYTES=<optional-upload-limit>`
 
 ### Why Cloudinary is used for uploads
 
 Netlify Functions are not a good path for large video file bodies. This app now avoids that bottleneck by requesting a signed upload from Netlify and then uploading the actual video directly from the browser to Cloudinary.
 
 That means your upload limit is no longer tied to Netlify's request body cap. It is now mainly determined by your Cloudinary plan and the `MAX_UPLOAD_BYTES` value you set.
+
+### Netlify scanner tip
+
+Avoid using very common literal values in Netlify environment variables, especially `ADMIN_USERNAME=admin`. Netlify compares your configured secret values against repo content, so generic values can trigger false positives. Use a unique login name instead, for example `site-owner-login-2026`.
