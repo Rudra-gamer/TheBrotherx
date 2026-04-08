@@ -1,15 +1,11 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { getStore } from '@netlify/blobs';
 
 const DATA_STORE_NAME = 'subham-admin-data';
 const SESSION_COOKIE = 'subham_admin_session';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const seedContentPath = path.resolve(__dirname, '../../../data/content.json');
+const seedContentUrl = new URL('../../../data/content.json', import.meta.url);
 
 const VALID_LAYOUTS = new Set(['packages', 'commercial', 'design']);
 const VALID_VARIANTS = new Set(['package', 'commercial', 'design']);
@@ -134,7 +130,7 @@ function normalizeContent(raw) {
 
 async function readSeedContent() {
   try {
-    const raw = await fs.readFile(seedContentPath, 'utf8');
+    const raw = await fs.readFile(seedContentUrl, 'utf8');
     return normalizeContent(JSON.parse(raw));
   } catch {
     return normalizeContent({});
