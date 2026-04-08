@@ -492,9 +492,10 @@
 
     document.getElementById('login-form').addEventListener('submit', async (event) => {
       event.preventDefault();
+      const formElement = event.currentTarget;
       try {
         setStatus('login-status', 'Signing in...');
-        const form = new FormData(event.currentTarget);
+        const form = new FormData(formElement);
         await api('/api/admin/login', {
           method: 'POST',
           body: JSON.stringify({
@@ -502,7 +503,7 @@
             password: form.get('password')
           })
         });
-        event.currentTarget.reset();
+        formElement.reset();
         setStatus('login-status', '');
         await checkSession();
       } catch (error) {
@@ -519,7 +520,8 @@
 
     document.getElementById('category-form').addEventListener('submit', async (event) => {
       event.preventDefault();
-      const form = new FormData(event.currentTarget);
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
       try {
         await api('/api/admin/pricing-categories', {
           method: 'POST',
@@ -529,7 +531,7 @@
             layout: form.get('layout')
           })
         });
-        event.currentTarget.reset();
+        formElement.reset();
         setStatus('category-status', 'Category created');
         await loadAdminData();
       } catch (error) {
@@ -539,7 +541,8 @@
 
     document.getElementById('pricing-form').addEventListener('submit', async (event) => {
       event.preventDefault();
-      const form = new FormData(event.currentTarget);
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
       try {
         await api('/api/admin/pricing-items', {
           method: 'POST',
@@ -558,7 +561,7 @@
             featured: document.getElementById('price-featured').checked
           })
         });
-        event.currentTarget.reset();
+        formElement.reset();
         document.getElementById('price-cta-label').value = 'Book This';
         document.getElementById('price-cta-link').value = '#contact';
         setStatus('pricing-status', 'Pricing item created');
@@ -570,7 +573,8 @@
 
     document.getElementById('media-form').addEventListener('submit', async (event) => {
       event.preventDefault();
-      const form = new FormData(event.currentTarget);
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
       try {
         setStatus('media-status', 'Saving media...');
         const uploaded = await uploadSelectedFile();
@@ -587,7 +591,7 @@
             featured: document.getElementById('media-featured').checked
           })
         });
-        event.currentTarget.reset();
+        formElement.reset();
         setStatus('media-status', 'Media item created');
         await loadAdminData();
       } catch (error) {
