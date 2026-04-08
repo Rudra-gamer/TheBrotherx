@@ -1,0 +1,307 @@
+{
+  "pricingCategories": [
+    {
+      "id": "reels",
+      "label": "Reels",
+      "icon": "📱",
+      "layout": "packages"
+    },
+    {
+      "id": "wedding",
+      "label": "Wedding",
+      "icon": "💍",
+      "layout": "packages"
+    },
+    {
+      "id": "commercial",
+      "label": "Commercial",
+      "icon": "🏢",
+      "layout": "commercial"
+    },
+    {
+      "id": "design",
+      "label": "Design",
+      "icon": "✨",
+      "layout": "design"
+    }
+  ],
+  "pricingItems": [
+    {
+      "id": "reel-normal",
+      "categoryId": "reels",
+      "tier": "Package 01",
+      "name": "Normal Reel",
+      "price": "₹800",
+      "priceNote": "per reel",
+      "features": [
+        "Basic cut editing",
+        "Background music sync",
+        "Standard colour correction",
+        "Captions & text overlays",
+        "HD 1080p export",
+        "1 revision included"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "package"
+    },
+    {
+      "id": "reel-standard",
+      "categoryId": "reels",
+      "tier": "Package 02",
+      "name": "Standard Reel",
+      "price": "₹1,200",
+      "priceNote": "per reel",
+      "features": [
+        "Advanced cut & flow editing",
+        "Premium music curation",
+        "Cinema colour grading & LUTs",
+        "Motion text & animations",
+        "Premium transitions & effects",
+        "HD 1080p export",
+        "2 revisions included"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": true,
+      "badge": "Most Popular",
+      "variant": "package"
+    },
+    {
+      "id": "reel-cinematic",
+      "categoryId": "reels",
+      "tier": "Package 03",
+      "name": "Cinematic Reel",
+      "price": "₹1,500",
+      "priceNote": "per reel",
+      "features": [
+        "Full cinematic edit & story arc",
+        "Custom sound design & mixing",
+        "Premium cinema colour grade",
+        "Advanced VFX & transitions",
+        "Animated intros & titles",
+        "4K export available",
+        "3 revisions included",
+        "Priority 24hr delivery"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "package"
+    },
+    {
+      "id": "wedding-traditional",
+      "categoryId": "wedding",
+      "tier": "Plan 01",
+      "name": "Traditional Video",
+      "price": "₹2,500",
+      "priceNote": "full event",
+      "features": [
+        "Full ceremony documentation",
+        "Background music",
+        "Basic colour correction",
+        "Standard transitions",
+        "HD export",
+        "1 revision"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "package"
+    },
+    {
+      "id": "wedding-semi",
+      "categoryId": "wedding",
+      "tier": "Plan 02",
+      "name": "Semi Cinematic Film",
+      "price": "₹3,500",
+      "priceNote": "full film",
+      "features": [
+        "Semi-cinematic style edit",
+        "Custom music arrangement",
+        "Cinema colour grading",
+        "Smooth transitions & effects",
+        "Highlight reel included",
+        "HD / 4K export",
+        "2 revisions"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": true,
+      "badge": "Best Value",
+      "variant": "package"
+    },
+    {
+      "id": "wedding-cinematic",
+      "categoryId": "wedding",
+      "tier": "Plan 03",
+      "name": "Cinematic Full Video",
+      "price": "₹5,000",
+      "priceNote": "feature film",
+      "features": [
+        "Full cinematic treatment",
+        "Custom orchestral score",
+        "Hollywood-style colour grade",
+        "Highlight + Full feature film",
+        "Drone footage integration",
+        "4K export",
+        "Unlimited revisions"
+      ],
+      "ctaLabel": "Book This",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "package"
+    },
+    {
+      "id": "wedding-highlight",
+      "categoryId": "wedding",
+      "tier": "Plan 04",
+      "name": "Highlight & Teaser",
+      "price": "Custom",
+      "priceNote": "quote on request",
+      "features": [
+        "3–5 minute highlight film",
+        "60 sec teaser/trailer",
+        "Social media cuts included",
+        "Cinematic grade & sound",
+        "48hr express option",
+        "WhatsApp-ready formats"
+      ],
+      "ctaLabel": "Get Quote",
+      "ctaLink": "https://wa.me/919040690150",
+      "featured": false,
+      "badge": "",
+      "variant": "package"
+    },
+    {
+      "id": "commercial-basic",
+      "categoryId": "commercial",
+      "tier": "Basic",
+      "name": "Basic Commercial Package",
+      "price": "",
+      "priceNote": "",
+      "features": [
+        "1 Ad Reel (20 sec, vertical)",
+        "Cinematic finishing & grade",
+        "1 post-ready format",
+        "Standard delivery"
+      ],
+      "ctaLabel": "Get Quote",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "commercial"
+    },
+    {
+      "id": "commercial-standard",
+      "categoryId": "commercial",
+      "tier": "Standard",
+      "name": "Standard Commercial Package",
+      "price": "",
+      "priceNote": "",
+      "features": [
+        "1 Ad Video (25–30 sec)",
+        "Cinematic finishing & colour",
+        "2 Short reels included",
+        "1 Horizontal video version",
+        "3 Post-ready formats",
+        "Priority delivery"
+      ],
+      "ctaLabel": "Get Quote",
+      "ctaLink": "#contact",
+      "featured": false,
+      "badge": "",
+      "variant": "commercial"
+    },
+    {
+      "id": "commercial-premium",
+      "categoryId": "commercial",
+      "tier": "Premium",
+      "name": "Premium Commercial Package",
+      "price": "",
+      "priceNote": "",
+      "features": [
+        "1 Ad Video (35–40 sec)",
+        "Premium cinematic grade",
+        "4 Short reels included",
+        "5 Post-ready formats",
+        "Special gift: 1 Horizontal video",
+        "Express priority delivery",
+        "2 revisions included"
+      ],
+      "ctaLabel": "Get Quote",
+      "ctaLink": "#contact",
+      "featured": true,
+      "badge": "Premium",
+      "variant": "commercial"
+    },
+    {
+      "id": "design-main",
+      "categoryId": "design",
+      "tier": "Design Service",
+      "name": "Instagram · Birthday · Wedding · Shop · Festival · Invitation Design",
+      "price": "₹100 – ₹200",
+      "priceNote": "Per Post / Story",
+      "features": [
+        "Instagram Posts",
+        "Story Design",
+        "Festival Banners",
+        "Invitation Cards",
+        "Birthday Cards",
+        "Shop Opening"
+      ],
+      "ctaLabel": "Order Now",
+      "ctaLink": "#contact",
+      "featured": true,
+      "badge": "",
+      "variant": "design",
+      "description": "Professional post & story design for any occasion. Scroll-stopping quality, quick turnaround."
+    }
+  ],
+  "media": [
+    {
+      "id": "media-2",
+      "title": "Fashion Brand Campaign",
+      "category": "reels",
+      "emoji": "🎬",
+      "filename": "",
+      "externalUrl": "",
+      "featured": true
+    },
+    {
+      "id": "media-3",
+      "title": "Product Launch Ad Film",
+      "category": "commercial",
+      "emoji": "🏢",
+      "filename": "",
+      "externalUrl": "",
+      "featured": true
+    },
+    {
+      "id": "media-5",
+      "title": "Cultural Festival",
+      "category": "events",
+      "emoji": "🎭",
+      "filename": "",
+      "externalUrl": "",
+      "featured": false
+    },
+    {
+      "id": "media-6",
+      "title": "Travel Cinematic Reel",
+      "category": "reels",
+      "emoji": "📱",
+      "filename": "",
+      "externalUrl": "",
+      "featured": false
+    }
+  ],
+  "settings": {
+    "adminUsername": "admin"
+  }
+}

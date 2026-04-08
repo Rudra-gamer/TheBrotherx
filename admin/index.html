@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel | Subham Prusty Films</title>
+  <style>
+    :root{
+      --bg:#0a0912;
+      --panel:#151321;
+      --panel-2:#1d1a2d;
+      --text:#f2ebdd;
+      --muted:#8a8399;
+      --gold:#c8aa5a;
+      --border:rgba(200,170,90,0.18);
+      --danger:#d45d5d;
+      --success:#52b788;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:radial-gradient(circle at top,#181426 0,#09080f 55%);
+      color:var(--text);
+      min-height:100vh;
+    }
+    .wrap{max-width:1200px;margin:0 auto;padding:32px 20px 64px}
+    .topbar,.panel,.card{background:rgba(21,19,33,.92);border:1px solid var(--border);backdrop-filter:blur(10px)}
+    .topbar{padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+    h1,h2,h3,p{margin:0}
+    .muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+    .panel{padding:24px;border-radius:18px}
+    .login{max-width:420px;margin:10vh auto 0}
+    .col-4{grid-column:span 4}
+    .col-5{grid-column:span 5}
+    .col-7{grid-column:span 7}
+    .col-8{grid-column:span 8}
+    .col-12{grid-column:span 12}
+    label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+    input,select,textarea,button{
+      width:100%;border-radius:12px;border:1px solid var(--border);
+      background:#0f0d18;color:var(--text);padding:12px 14px;font:inherit
+    }
+    textarea{min-height:120px;resize:vertical}
+    button{cursor:pointer;background:var(--gold);color:#130f08;font-weight:700}
+    button.secondary{background:transparent;color:var(--text)}
+    button.danger{background:var(--danger);color:#fff}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .list{display:grid;gap:12px;margin-top:18px}
+    .card{padding:16px;border-radius:16px}
+    .card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .chip{border:1px solid var(--border);color:var(--gold);padding:6px 10px;border-radius:999px;font-size:12px}
+    .stack{display:grid;gap:16px}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .status{margin-top:12px;font-size:14px;color:var(--gold);min-height:20px}
+    .hidden{display:none}
+    .small{font-size:13px}
+    a.inline{color:var(--gold)}
+    @media (max-width: 900px){
+      .col-4,.col-5,.col-7,.col-8,.col-12{grid-column:span 12}
+      .row2{grid-template-columns:1fr}
+      .topbar{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="login-view" class="panel login">
+      <div class="stack">
+        <div>
+          <h1>Admin Panel</h1>
+          <p class="muted" style="margin-top:8px">Manage price categories, packages, videos, and inquiries.</p>
+        </div>
+        <form id="login-form" class="stack">
+          <div>
+            <label for="username">Username</label>
+            <input id="username" name="username" value="admin" autocomplete="username" />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" placeholder="Enter admin password" autocomplete="current-password" />
+          </div>
+          <button type="submit">Sign In</button>
+          <div class="status" id="login-status"></div>
+        </form>
+      </div>
+    </div>
+
+    <div id="app-view" class="hidden">
+      <div class="topbar">
+        <div>
+          <h1>Subham Prusty Films Admin</h1>
+          <p class="muted" style="margin-top:8px">Homepage: <a class="inline" href="/" target="_blank" rel="noopener">open portfolio</a></p>
+        </div>
+        <div class="actions">
+          <button id="refresh-btn" class="secondary" type="button">Refresh Data</button>
+          <button id="logout-btn" type="button">Logout</button>
+        </div>
+      </div>
+
+      <div class="grid">
+        <section class="panel col-4">
+          <h2>Add Price Category</h2>
+          <p class="muted small" style="margin-top:8px">These become the pricing tabs on the frontend.</p>
+          <form id="category-form" class="stack" style="margin-top:18px">
+            <div>
+              <label for="cat-label">Label</label>
+              <input id="cat-label" name="label" placeholder="Reels" required />
+            </div>
+            <div class="row2">
+              <div>
+                <label for="cat-icon">Icon</label>
+                <input id="cat-icon" name="icon" placeholder="📱" />
+              </div>
+              <div>
+                <label for="cat-layout">Layout</label>
+                <select id="cat-layout" name="layout">
+                  <option value="packages">Package Cards</option>
+                  <option value="commercial">Commercial Cards</option>
+                  <option value="design">Design Strip</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit">Create Category</button>
+            <div class="status" id="category-status"></div>
+          </form>
+        </section>
+
+        <section class="panel col-8">
+          <h2>Categories</h2>
+          <div id="categories-list" class="list"></div>
+        </section>
+
+        <section class="panel col-5">
+          <h2>Add Pricing Item</h2>
+          <form id="pricing-form" class="stack" style="margin-top:18px">
+            <div class="row2">
+              <div>
+                <label for="price-category">Category</label>
+                <select id="price-category" name="categoryId" required></select>
+              </div>
+              <div>
+                <label for="price-variant">Variant</label>
+                <select id="price-variant" name="variant">
+                  <option value="package">Package</option>
+                  <option value="commercial">Commercial</option>
+                  <option value="design">Design</option>
+                </select>
+              </div>
+            </div>
+            <div class="row2">
+              <div>
+                <label for="price-tier">Tier</label>
+                <input id="price-tier" name="tier" placeholder="Package 01" />
+              </div>
+              <div>
+                <label for="price-name">Name</label>
+                <input id="price-name" name="name" placeholder="Normal Reel" required />
+              </div>
+            </div>
+            <div class="row2">
+              <div>
+                <label for="price-amount">Price</label>
+                <input id="price-amount" name="price" placeholder="₹800" />
+              </div>
+              <div>
+                <label for="price-note">Price Note</label>
+                <input id="price-note" name="priceNote" placeholder="per reel" />
+              </div>
+            </div>
+            <div>
+              <label for="price-description">Description</label>
+              <input id="price-description" name="description" placeholder="Optional description for design/commercial sections" />
+            </div>
+            <div>
+              <label for="price-features">Features</label>
+              <textarea id="price-features" name="features" placeholder="One feature per line"></textarea>
+            </div>
+            <div class="row2">
+              <div>
+                <label for="price-cta-label">CTA Label</label>
+                <input id="price-cta-label" name="ctaLabel" value="Book This" />
+              </div>
+              <div>
+                <label for="price-cta-link">CTA Link</label>
+                <input id="price-cta-link" name="ctaLink" value="#contact" />
+              </div>
+            </div>
+            <div class="row2">
+              <div>
+                <label for="price-badge">Badge</label>
+                <input id="price-badge" name="badge" placeholder="Most Popular" />
+              </div>
+              <div style="display:flex;align-items:end">
+                <label style="display:flex;align-items:center;gap:10px;letter-spacing:normal;text-transform:none;color:var(--text);margin:0">
+                  <input id="price-featured" name="featured" type="checkbox" style="width:auto;padding:0" />
+                  Mark as featured
+                </label>
+              </div>
+            </div>
+            <button type="submit">Add Pricing Item</button>
+            <div class="status" id="pricing-status"></div>
+          </form>
+        </section>
+
+        <section class="panel col-7">
+          <h2>Pricing Items</h2>
+          <div id="pricing-list" class="list"></div>
+        </section>
+
+        <section class="panel col-5">
+          <h2>Add Video / Media</h2>
+          <form id="media-form" class="stack" style="margin-top:18px">
+            <div class="row2">
+              <div>
+                <label for="media-title">Title</label>
+                <input id="media-title" name="title" placeholder="Fashion Brand Campaign" required />
+              </div>
+              <div>
+                <label for="media-category">Category</label>
+                <input id="media-category" name="category" placeholder="reels" required />
+              </div>
+            </div>
+            <div class="row2">
+              <div>
+                <label for="media-emoji">Emoji</label>
+                <input id="media-emoji" name="emoji" placeholder="🎬" />
+              </div>
+              <div style="display:flex;align-items:end">
+                <label style="display:flex;align-items:center;gap:10px;letter-spacing:normal;text-transform:none;color:var(--text);margin:0">
+                  <input id="media-featured" name="featured" type="checkbox" style="width:auto;padding:0" />
+                  Show in featured work
+                </label>
+              </div>
+            </div>
+            <div>
+              <label for="media-file">Upload file</label>
+              <input id="media-file" name="file" type="file" accept="image/*,video/*" />
+              <p class="muted small" id="media-upload-note" style="margin-top:8px">Uploads will go directly to Cloudinary once the admin session loads.</p>
+            </div>
+            <div>
+              <label for="media-external">External URL</label>
+              <input id="media-external" name="externalUrl" placeholder="https://..." />
+            </div>
+            <button type="submit">Add Media</button>
+            <div class="status" id="media-status"></div>
+          </form>
+        </section>
+
+        <section class="panel col-7">
+          <h2>Videos / Media</h2>
+          <div id="media-list" class="list"></div>
+        </section>
+
+        <section class="panel col-12">
+          <h2>Recent Inquiries</h2>
+          <div id="inquiries-list" class="list"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const state = {
+      categories: [],
+      items: [],
+      media: [],
+      inquiries: [],
+      cloudinary: null
+    };
+
+    async function api(url, options = {}) {
+      const response = await fetch(url, {
+        credentials: 'same-origin',
+        headers: {
+          ...(options.body && !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
+          ...(options.headers || {})
+        },
+        ...options
+      });
+      const text = await response.text();
+      let data = {};
+      try { data = text ? JSON.parse(text) : {}; } catch { data = { raw: text }; }
+      if (!response.ok) throw new Error(data.error || 'Request failed');
+      return data;
+    }
+
+    function setStatus(id, message, isError = false) {
+      const el = document.getElementById(id);
+      el.textContent = message || '';
+      el.style.color = isError ? '#ff9b9b' : 'var(--gold)';
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function syncCategoryOptions() {
+      const select = document.getElementById('price-category');
+      select.innerHTML = state.categories.map((category) =>
+        '<option value="' + escapeHtml(category.id) + '">' + escapeHtml(category.icon + ' ' + category.label) + '</option>'
+      ).join('');
+    }
+
+    function renderCategories() {
+      const root = document.getElementById('categories-list');
+      if (!state.categories.length) {
+        root.innerHTML = '<p class="muted">No categories yet.</p>';
+        return;
+      }
+      root.innerHTML = state.categories.map((category) => `
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>${escapeHtml(category.icon)} ${escapeHtml(category.label)}</h3>
+              <p class="muted small" style="margin-top:6px">ID: ${escapeHtml(category.id)} · Layout: ${escapeHtml(category.layout)}</p>
+            </div>
+            <div class="actions">
+              <button class="secondary" type="button" onclick="editCategory('${escapeHtml(category.id)}')">Edit</button>
+              <button class="danger" type="button" onclick="deleteCategory('${escapeHtml(category.id)}')">Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderPricingItems() {
+      const root = document.getElementById('pricing-list');
+      if (!state.items.length) {
+        root.innerHTML = '<p class="muted">No pricing items yet.</p>';
+        return;
+      }
+      root.innerHTML = state.items.map((item) => `
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>${escapeHtml(item.name)}</h3>
+              <p class="muted small" style="margin-top:6px">${escapeHtml(item.categoryId)} · ${escapeHtml(item.variant)} · ${escapeHtml(item.price || 'No fixed price')}</p>
+            </div>
+            <div class="actions">
+              <button class="secondary" type="button" onclick="editPricingItem('${escapeHtml(item.id)}')">Edit</button>
+              <button class="danger" type="button" onclick="deletePricingItem('${escapeHtml(item.id)}')">Delete</button>
+            </div>
+          </div>
+          <div class="chips">${(item.features || []).map((feature) => '<span class="chip">' + escapeHtml(feature) + '</span>').join('')}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderMedia() {
+      const root = document.getElementById('media-list');
+      if (!state.media.length) {
+        root.innerHTML = '<p class="muted">No media entries yet.</p>';
+        return;
+      }
+      root.innerHTML = state.media.map((item) => `
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>${escapeHtml(item.emoji || '🎬')} ${escapeHtml(item.title)}</h3>
+              <p class="muted small" style="margin-top:6px">${escapeHtml(item.category)} ${item.filename ? '· Stored upload: ' + escapeHtml(item.filename) : ''} ${item.externalUrl ? '· External URL linked' : ''}</p>
+            </div>
+            <div class="actions">
+              <button class="secondary" type="button" onclick="editMediaItem('${escapeHtml(item.id)}')">Edit</button>
+              <button class="danger" type="button" onclick="deleteMediaItem('${escapeHtml(item.id)}')">Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderInquiries() {
+      const root = document.getElementById('inquiries-list');
+      if (!state.inquiries.length) {
+        root.innerHTML = '<p class="muted">No inquiries submitted yet.</p>';
+        return;
+      }
+      root.innerHTML = state.inquiries.map((item) => `
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>${escapeHtml(item.name)} · ${escapeHtml(item.phone)}</h3>
+              <p class="muted small" style="margin-top:6px">${escapeHtml(item.service)} ${item.budget ? '· ' + escapeHtml(item.budget) : ''} ${item.date ? '· ' + escapeHtml(item.date) : ''}</p>
+            </div>
+          </div>
+          <p style="margin-top:12px;line-height:1.7">${escapeHtml(item.message)}</p>
+          ${item.email ? '<p class="muted small" style="margin-top:10px">Email: ' + escapeHtml(item.email) + '</p>' : ''}
+        </div>
+      `).join('');
+    }
+
+    function renderAll() {
+      syncCategoryOptions();
+      renderCategories();
+      renderPricingItems();
+      renderMedia();
+      renderInquiries();
+    }
+
+    async function loadAdminData() {
+      const data = await api('/api/admin/content');
+      state.categories = data.pricingCategories || [];
+      state.items = data.pricingItems || [];
+      state.media = data.media || [];
+      state.inquiries = data.inquiries || [];
+      state.cloudinary = data.cloudinary || null;
+      renderAll();
+      updateUploadNote();
+    }
+
+    function formatBytes(value) {
+      const bytes = Number(value || 0);
+      if (!bytes) return '0 B';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+
+    function updateUploadNote() {
+      const note = document.getElementById('media-upload-note');
+      if (!note) return;
+      if (state.cloudinary?.enabled) {
+        note.textContent = 'Direct Cloudinary upload enabled. Max file size: ' + formatBytes(state.cloudinary.maxUploadBytes) + '.';
+      } else {
+        note.textContent = 'Cloudinary is not configured yet. Add Cloudinary environment variables in Netlify before uploading media.';
+      }
+    }
+
+    async function checkSession() {
+      const session = await api('/api/admin/session');
+      document.getElementById('login-view').classList.toggle('hidden', session.authenticated);
+      document.getElementById('app-view').classList.toggle('hidden', !session.authenticated);
+      if (session.authenticated) await loadAdminData();
+    }
+
+    async function uploadSelectedFile() {
+      const fileInput = document.getElementById('media-file');
+      if (!fileInput.files.length) {
+        return {
+          externalUrl: '',
+          resourceType: '',
+          publicId: '',
+          filename: ''
+        };
+      }
+      const file = fileInput.files[0];
+
+      if (!state.cloudinary?.enabled) {
+        throw new Error('Cloudinary is not configured yet.');
+      }
+
+      const sign = await api('/api/admin/upload-signature', {
+        method: 'POST',
+        body: JSON.stringify({
+          fileName: file.name,
+          fileSize: file.size,
+          mimeType: file.type
+        })
+      });
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('api_key', sign.apiKey);
+      formData.append('timestamp', String(sign.timestamp));
+      formData.append('signature', sign.signature);
+      formData.append('folder', sign.folder);
+
+      const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/${encodeURIComponent(sign.cloudName)}/${encodeURIComponent(sign.resourceType)}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const uploadData = await uploadResponse.json();
+      if (!uploadResponse.ok) {
+        throw new Error(uploadData.error?.message || 'Cloudinary upload failed.');
+      }
+
+      return {
+        externalUrl: uploadData.secure_url || uploadData.url || '',
+        resourceType: uploadData.resource_type || 'auto',
+        publicId: uploadData.public_id || '',
+        filename: ''
+      };
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        setStatus('login-status', 'Signing in...');
+        const form = new FormData(event.currentTarget);
+        await api('/api/admin/login', {
+          method: 'POST',
+          body: JSON.stringify({
+            username: form.get('username'),
+            password: form.get('password')
+          })
+        });
+        event.currentTarget.reset();
+        document.getElementById('username').value = 'admin';
+        setStatus('login-status', '');
+        await checkSession();
+      } catch (error) {
+        setStatus('login-status', error.message, true);
+      }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      await api('/api/admin/logout', { method: 'POST' });
+      await checkSession();
+    });
+
+    document.getElementById('refresh-btn').addEventListener('click', loadAdminData);
+
+    document.getElementById('category-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      try {
+        await api('/api/admin/pricing-categories', {
+          method: 'POST',
+          body: JSON.stringify({
+            label: form.get('label'),
+            icon: form.get('icon'),
+            layout: form.get('layout')
+          })
+        });
+        event.currentTarget.reset();
+        setStatus('category-status', 'Category created');
+        await loadAdminData();
+      } catch (error) {
+        setStatus('category-status', error.message, true);
+      }
+    });
+
+    document.getElementById('pricing-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      try {
+        await api('/api/admin/pricing-items', {
+          method: 'POST',
+          body: JSON.stringify({
+            categoryId: form.get('categoryId'),
+            variant: form.get('variant'),
+            tier: form.get('tier'),
+            name: form.get('name'),
+            price: form.get('price'),
+            priceNote: form.get('priceNote'),
+            description: form.get('description'),
+            features: String(form.get('features') || '').split('\n').map((value) => value.trim()).filter(Boolean),
+            ctaLabel: form.get('ctaLabel'),
+            ctaLink: form.get('ctaLink'),
+            badge: form.get('badge'),
+            featured: document.getElementById('price-featured').checked
+          })
+        });
+        event.currentTarget.reset();
+        document.getElementById('price-cta-label').value = 'Book This';
+        document.getElementById('price-cta-link').value = '#contact';
+        setStatus('pricing-status', 'Pricing item created');
+        await loadAdminData();
+      } catch (error) {
+        setStatus('pricing-status', error.message, true);
+      }
+    });
+
+    document.getElementById('media-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      try {
+        setStatus('media-status', 'Saving media...');
+        const uploaded = await uploadSelectedFile();
+        await api('/api/admin/media', {
+          method: 'POST',
+          body: JSON.stringify({
+            title: form.get('title'),
+            category: form.get('category'),
+            emoji: form.get('emoji'),
+            externalUrl: uploaded.externalUrl || form.get('externalUrl'),
+            filename: uploaded.filename || '',
+            resourceType: uploaded.resourceType || '',
+            publicId: uploaded.publicId || '',
+            featured: document.getElementById('media-featured').checked
+          })
+        });
+        event.currentTarget.reset();
+        setStatus('media-status', 'Media item created');
+        await loadAdminData();
+      } catch (error) {
+        setStatus('media-status', error.message, true);
+      }
+    });
+
+    async function deleteCategory(id) {
+      if (!confirm('Delete this category and all its pricing items?')) return;
+      await api('/api/admin/pricing-categories/' + encodeURIComponent(id), { method: 'DELETE' });
+      await loadAdminData();
+    }
+
+    async function deletePricingItem(id) {
+      if (!confirm('Delete this pricing item?')) return;
+      await api('/api/admin/pricing-items/' + encodeURIComponent(id), { method: 'DELETE' });
+      await loadAdminData();
+    }
+
+    async function deleteMediaItem(id) {
+      if (!confirm('Delete this media item?')) return;
+      await api('/api/admin/media/' + encodeURIComponent(id), { method: 'DELETE' });
+      await loadAdminData();
+    }
+
+    async function editCategory(id) {
+      const current = state.categories.find((item) => item.id === id);
+      if (!current) return;
+      const label = prompt('Category label', current.label);
+      if (!label) return;
+      const icon = prompt('Category icon', current.icon || '🎬');
+      const layout = prompt('Category layout: packages, commercial, or design', current.layout || 'packages');
+      await api('/api/admin/pricing-categories/' + encodeURIComponent(id), {
+        method: 'PUT',
+        body: JSON.stringify({ label, icon, layout })
+      });
+      await loadAdminData();
+    }
+
+    async function editPricingItem(id) {
+      const current = state.items.find((item) => item.id === id);
+      if (!current) return;
+      const name = prompt('Package name', current.name);
+      if (!name) return;
+      const price = prompt('Price', current.price || '');
+      const features = prompt('Features, separated by |', (current.features || []).join(' | '));
+      await api('/api/admin/pricing-items/' + encodeURIComponent(id), {
+        method: 'PUT',
+        body: JSON.stringify({
+          name,
+          price,
+          features: String(features || '').split('|').map((value) => value.trim()).filter(Boolean)
+        })
+      });
+      await loadAdminData();
+    }
+
+    async function editMediaItem(id) {
+      const current = state.media.find((item) => item.id === id);
+      if (!current) return;
+      const title = prompt('Media title', current.title);
+      if (!title) return;
+      const category = prompt('Media category', current.category);
+      const emoji = prompt('Emoji', current.emoji || '🎬');
+      const externalUrl = prompt('External URL', current.externalUrl || '');
+      await api('/api/admin/media/' + encodeURIComponent(id), {
+        method: 'PUT',
+        body: JSON.stringify({ title, category, emoji, externalUrl })
+      });
+      await loadAdminData();
+    }
+
+    checkSession();
+    window.deleteCategory = deleteCategory;
+    window.deletePricingItem = deletePricingItem;
+    window.deleteMediaItem = deleteMediaItem;
+    window.editCategory = editCategory;
+    window.editPricingItem = editPricingItem;
+    window.editMediaItem = editMediaItem;
+  </script>
+</body>
+</html>

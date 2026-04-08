@@ -1,0 +1,2224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Subham Prusty — Cinematic Video Editor</title>
+<meta name="description" content="Subham Prusty — Cinematic video editor & studio owner from Hinjilicut, Odisha. Wedding films, commercial reels, invitation videos."/>
+<meta name="keywords" content="video editor Hinjilicut, wedding film Odisha, cinematic reels, Subham Prusty"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@200;300;400;500&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet"/>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   SUBHAM PRUSTY FILMS — Premium Cinematic Portfolio
+   Design Direction: Luxury Film Studio · Art Deco Dark
+   Palette: Obsidian Black · Champagne Gold · Ivory
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --void: #05040a;
+  --deep: #0c0b14;
+  --surface: #13111d;
+  --raised: #1a1826;
+  --border: rgba(200,170,90,0.15);
+  --border-bright: rgba(200,170,90,0.4);
+  --gold: #c8aa5a;
+  --gold-light: #e8cc80;
+  --gold-dim: rgba(200,170,90,0.08);
+  --ivory: #f4efe4;
+  --text: #e8e2d8;
+  --muted: #6a6478;
+  --dim: #302c3f;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-cinzel: 'Cinzel', serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+  --ease-in: cubic-bezier(0.4,0,1,1);
+  --nav-h: 72px;
+  --pad: clamp(24px,7vw,120px);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth;font-size:16px}
+
+body{
+  background:var(--void);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim)}
+
+/* ── Selection ── */
+::selection{background:var(--gold);color:var(--void)}
+
+/* ══════════════════════════════
+   CURSOR
+══════════════════════════════ */
+#cur-dot{
+  position:fixed;width:6px;height:6px;
+  background:var(--gold);border-radius:50%;
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,opacity .2s;
+  mix-blend-mode:normal;
+}
+#cur-ring{
+  position:fixed;width:32px;height:32px;
+  border:1px solid rgba(200,170,90,.5);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:width .35s var(--ease),height .35s var(--ease),border-color .35s;
+}
+body:has(a:hover) #cur-dot,
+body:has(button:hover) #cur-dot{width:12px;height:12px}
+body:has(a:hover) #cur-ring,
+body:has(button:hover) #cur-ring{width:52px;height:52px;border-color:var(--gold)}
+
+/* ══════════════════════════════
+   LOADER
+══════════════════════════════ */
+#loader{
+  position:fixed;inset:0;z-index:10000;
+  background:var(--void);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:28px;
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+#loader.out{opacity:0;pointer-events:none}
+.ld-logo{
+  font-family:var(--font-cinzel);
+  font-size:clamp(1.6rem,5vw,3rem);
+  font-weight:700;letter-spacing:.35em;
+  color:var(--gold);
+  animation:ldPulse 1.4s ease infinite;
+}
+@keyframes ldPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.ld-line{
+  width:180px;height:1px;
+  background:var(--dim);position:relative;overflow:hidden;
+}
+.ld-line::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  animation:ldSweep 1.2s ease forwards .2s;
+}
+@keyframes ldSweep{to{left:100%}}
+.ld-sub{
+  font-size:.6rem;letter-spacing:.5em;
+  text-transform:uppercase;color:var(--muted);
+  animation:ldPulse 1.4s ease infinite .3s;
+}
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  height:var(--nav-h);z-index:1000;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:0 var(--pad);
+  transition:background .5s,backdrop-filter .5s,border-color .5s;
+}
+nav.scrolled{
+  background:rgba(5,4,10,.88);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--font-cinzel);
+  font-size:1.05rem;letter-spacing:.3em;
+  color:var(--gold);text-decoration:none;
+  display:flex;flex-direction:column;line-height:1;
+}
+.nav-logo span{
+  font-size:.42rem;letter-spacing:.6em;
+  color:var(--muted);margin-top:4px;
+}
+.nav-links{
+  display:flex;align-items:center;gap:36px;list-style:none;
+}
+.nav-links a{
+  font-size:.68rem;font-weight:400;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;
+  transition:color .3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;
+  width:0;height:1px;background:var(--gold);
+  transition:width .4s var(--ease);
+}
+.nav-links a:hover,
+.nav-links a.active{color:var(--ivory)}
+.nav-links a:hover::after,
+.nav-links a.active::after{width:100%}
+
+.nav-book{
+  font-size:.65rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--void);background:var(--gold);
+  padding:10px 26px;text-decoration:none;
+  transition:all .35s var(--ease);
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.nav-book:hover{
+  background:var(--gold-light);
+  box-shadow:0 0 40px rgba(200,170,90,.3);
+}
+
+/* Hamburger */
+.ham{
+  display:none;flex-direction:column;gap:5px;
+  cursor:pointer;padding:8px;background:none;border:none;
+}
+.ham span{
+  display:block;width:24px;height:1px;
+  background:var(--gold);transition:all .4s var(--ease);
+}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.ham.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+
+/* Mobile drawer */
+.drawer{
+  position:fixed;inset:0;z-index:900;
+  background:var(--void);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:40px;
+  transform:translateY(-100%);
+  transition:transform .7s var(--ease);
+  border-bottom:1px solid var(--border);
+}
+.drawer.open{transform:translateY(0)}
+.drawer a{
+  font-family:var(--font-cinzel);
+  font-size:clamp(1.8rem,6vw,3.5rem);
+  font-weight:400;letter-spacing:.1em;
+  color:var(--text);text-decoration:none;
+  transition:color .3s;
+}
+.drawer a:hover{color:var(--gold)}
+
+/* ══════════════════════════════
+   REVEAL SYSTEM
+══════════════════════════════ */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(48px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease);
+}
+[data-reveal="left"]{transform:translateX(-48px) translateY(0)}
+[data-reveal="right"]{transform:translateX(48px) translateY(0)}
+[data-reveal="scale"]{transform:scale(.92);transform-origin:center}
+[data-reveal].visible{opacity:1;transform:none}
+
+/* ══════════════════════════════
+   SECTION CHROME
+══════════════════════════════ */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:14px;
+  font-size:.6rem;font-weight:500;
+  letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:20px;
+}
+.eyebrow::before{
+  content:'';display:block;width:36px;height:1px;background:var(--gold);
+}
+
+.display{
+  font-family:var(--font-serif);
+  font-size:clamp(2.4rem,5.5vw,5rem);
+  font-weight:700;line-height:1.08;
+  letter-spacing:-.02em;color:var(--ivory);
+}
+.display em{font-style:italic;color:var(--gold)}
+
+.body-text{
+  font-size:clamp(.85rem,1.1vw,1rem);
+  color:var(--muted);line-height:1.85;
+  max-width:56ch;
+}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--font-body);
+  font-size:.68rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:all .4s var(--ease);
+  position:relative;overflow:hidden;
+}
+.btn-gold{
+  color:var(--void);background:var(--gold);
+  padding:16px 40px;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+}
+.btn-gold::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold-light);
+  transform:translateX(-101%);
+  transition:transform .4s var(--ease);
+}
+.btn-gold:hover{box-shadow:0 0 50px rgba(200,170,90,.25)}
+.btn-gold:hover::before{transform:translateX(0)}
+.btn-gold span,.btn-gold svg{position:relative;z-index:1}
+
+.btn-ghost{
+  color:var(--text);padding:15px 38px;
+  border:1px solid var(--border-bright);
+}
+.btn-ghost:hover{
+  border-color:var(--gold);color:var(--gold);
+  background:var(--gold-dim);
+}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+#hero{
+  min-height:100svh;
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:0 var(--pad);
+  overflow:hidden;
+}
+
+/* Cinematic background grid */
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 65% 45%, rgba(200,170,90,.07) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 80% at 5% 90%, rgba(200,170,90,.04) 0%, transparent 55%),
+    linear-gradient(175deg,#090817 0%,#05040a 55%,#0a0812 100%);
+}
+
+/* Subtle film grain SVG overlay */
+.hero-grain{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  opacity:.7;
+}
+
+/* Vertical gold lines — cinematic framing */
+.hero-lines{position:absolute;inset:0;pointer-events:none}
+.hero-lines::before{
+  content:'';position:absolute;
+  top:var(--nav-h);bottom:0;left:calc(var(--pad) - 1px);
+  width:1px;
+  background:linear-gradient(to bottom,transparent 0%,var(--border) 20%,var(--border) 80%,transparent 100%);
+}
+.hero-lines::after{
+  content:'';position:absolute;
+  top:var(--nav-h);bottom:0;right:var(--pad);
+  width:1px;
+  background:linear-gradient(to bottom,transparent 0%,var(--border) 20%,var(--border) 80%,transparent 100%);
+}
+
+/* Hero corner marks */
+.corner{position:absolute;width:24px;height:24px}
+.corner-tl{top:calc(var(--nav-h)+32px);left:var(--pad);border-top:1px solid var(--gold);border-left:1px solid var(--gold)}
+.corner-tr{top:calc(var(--nav-h)+32px);right:var(--pad);border-top:1px solid var(--gold);border-right:1px solid var(--gold)}
+.corner-bl{bottom:60px;left:var(--pad);border-bottom:1px solid var(--gold);border-left:1px solid var(--gold)}
+.corner-br{bottom:60px;right:var(--pad);border-bottom:1px solid var(--gold);border-right:1px solid var(--gold)}
+
+/* Hero content */
+.hero-content{
+  position:relative;z-index:2;
+  padding-top:var(--nav-h);
+}
+
+.hero-eyebrow{
+  display:flex;align-items:center;gap:14px;
+  font-size:.58rem;font-weight:400;
+  letter-spacing:.55em;text-transform:uppercase;
+  color:var(--gold);
+  opacity:0;animation:hUp .9s var(--ease) .6s forwards;
+}
+.hero-eyebrow::before{
+  content:'';display:block;width:44px;height:1px;background:var(--gold);
+}
+
+.hero-name{
+  font-family:var(--font-cinzel);
+  font-size:clamp(3rem,9vw,9.5rem);
+  font-weight:900;
+  line-height:.88;
+  letter-spacing:.03em;
+  color:var(--ivory);
+  margin:28px 0 0;
+  opacity:0;animation:hUp .9s var(--ease) .8s forwards;
+}
+.hero-name .gold{color:var(--gold)}
+.hero-name .stroke{
+  -webkit-text-stroke:1px var(--gold);
+  color:transparent;
+}
+
+.hero-tagline{
+  font-family:var(--font-serif);
+  font-size:clamp(1rem,2vw,1.5rem);
+  font-style:italic;font-weight:400;
+  color:var(--muted);
+  margin:28px 0 0;
+  opacity:0;animation:hUp .9s var(--ease) 1s forwards;
+}
+
+.hero-divider{
+  width:60px;height:1px;background:var(--border-bright);
+  margin:32px 0;
+  opacity:0;animation:hUp .9s var(--ease) 1.1s forwards;
+}
+
+.hero-desc{
+  font-size:.88rem;color:var(--muted);
+  line-height:1.8;max-width:46ch;
+  opacity:0;animation:hUp .9s var(--ease) 1.2s forwards;
+}
+
+.hero-ctas{
+  display:flex;gap:16px;flex-wrap:wrap;
+  margin-top:40px;
+  opacity:0;animation:hUp .9s var(--ease) 1.35s forwards;
+}
+
+@keyframes hUp{
+  from{opacity:0;transform:translateY(32px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Hero right panel */
+.hero-right{
+  position:relative;z-index:2;
+  padding-top:var(--nav-h);
+  display:flex;flex-direction:column;
+  align-items:flex-end;gap:0;
+}
+
+/* Big decorative letter */
+.hero-deco{
+  font-family:var(--font-cinzel);
+  font-size:clamp(12rem,22vw,22rem);
+  font-weight:900;line-height:.85;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(200,170,90,.06);
+  user-select:none;pointer-events:none;
+  opacity:0;animation:hFade 1.5s ease 1.4s forwards;
+  position:relative;right:calc(var(--pad)*-.3);
+}
+@keyframes hFade{to{opacity:1}}
+
+.hero-stats{
+  display:flex;flex-direction:column;gap:24px;
+  align-self:flex-end;margin-right:0;
+  opacity:0;animation:hFade 1s ease 1.5s forwards;
+}
+.stat{
+  text-align:right;padding-right:20px;
+  border-right:1px solid var(--border-bright);
+}
+.stat-num{
+  font-family:var(--font-cinzel);
+  font-size:2.2rem;color:var(--gold);line-height:1;
+}
+.stat-label{
+  font-size:.55rem;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--muted);
+  margin-top:4px;
+}
+
+/* Scroll cue */
+.scroll-cue{
+  position:absolute;bottom:40px;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;
+  gap:10px;z-index:2;
+  opacity:0;animation:hFade 1s ease 1.8s forwards;
+}
+.scroll-cue span{
+  font-size:.55rem;letter-spacing:.4em;
+  text-transform:uppercase;color:var(--muted);
+}
+.scroll-line{
+  width:1px;height:56px;position:relative;overflow:hidden;
+  background:var(--border);
+}
+.scroll-line::after{
+  content:'';position:absolute;
+  top:-100%;left:0;width:100%;height:100%;
+  background:linear-gradient(to bottom,transparent,var(--gold));
+  animation:scrollDrop 2s ease infinite;
+}
+@keyframes scrollDrop{
+  0%{top:-100%}60%,100%{top:100%}
+}
+
+/* ══════════════════════════════
+   TICKER
+══════════════════════════════ */
+.ticker{
+  background:var(--gold);
+  padding:13px 0;overflow:hidden;
+  display:flex;
+}
+.ticker-inner{
+  display:flex;white-space:nowrap;
+  animation:tick 22s linear infinite;
+  gap:0;
+}
+.ticker-item{
+  display:inline-flex;align-items:center;gap:20px;
+  font-family:var(--font-cinzel);font-size:.75rem;
+  letter-spacing:.2em;color:var(--void);
+  padding:0 28px;
+}
+.ticker-sep{
+  display:inline-block;width:4px;height:4px;
+  background:rgba(5,4,10,.35);border-radius:50%;
+}
+@keyframes tick{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ══════════════════════════════
+   SERVICES
+══════════════════════════════ */
+#services{
+  padding:120px var(--pad);
+  background:var(--deep);
+  border-top:1px solid var(--border);
+}
+
+.svc-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:72px;
+  flex-wrap:wrap;gap:28px;
+}
+
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--border);
+}
+
+.svc-card{
+  background:var(--deep);
+  padding:44px 32px;
+  position:relative;overflow:hidden;
+  transition:background .4s var(--ease);
+  cursor:default;
+}
+.svc-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:2px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease);
+}
+.svc-card:hover{background:var(--raised)}
+.svc-card:hover::after{transform:scaleX(1)}
+
+.svc-num{
+  font-family:var(--font-cinzel);
+  font-size:3.5rem;color:rgba(200,170,90,.08);
+  position:absolute;top:12px;right:16px;
+  line-height:1;font-weight:900;
+  transition:color .4s;
+}
+.svc-card:hover .svc-num{color:rgba(200,170,90,.14)}
+
+.svc-icon{font-size:1.8rem;margin-bottom:20px;display:block}
+.svc-name{
+  font-family:var(--font-serif);font-size:1.15rem;
+  font-weight:700;color:var(--ivory);
+  margin-bottom:12px;
+  transition:color .3s;
+}
+.svc-card:hover .svc-name{color:var(--gold)}
+.svc-desc{font-size:.78rem;color:var(--muted);line-height:1.75}
+
+/* ══════════════════════════════
+   FEATURED WORK
+══════════════════════════════ */
+#work{
+  padding:120px var(--pad);
+  position:relative;overflow:hidden;
+}
+#work::before{
+  content:'WORK';position:absolute;
+  right:calc(var(--pad)*-.5);top:60px;
+  font-family:var(--font-cinzel);font-size:18vw;
+  font-weight:900;color:transparent;
+  -webkit-text-stroke:1px rgba(200,170,90,.025);
+  line-height:1;pointer-events:none;user-select:none;
+}
+
+.work-header{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;margin-bottom:72px;
+  flex-wrap:wrap;gap:24px;
+}
+
+/* Asymmetric masonry */
+.work-grid{
+  display:grid;
+  grid-template-columns:1.6fr 1fr 1fr;
+  grid-template-rows:360px 260px;
+  gap:12px;
+}
+.wi{
+  position:relative;overflow:hidden;
+  background:var(--surface);cursor:pointer;
+}
+.wi:nth-child(1){grid-row:span 2}
+.wi:nth-child(2){grid-column:2}
+.wi:nth-child(3){grid-column:3}
+.wi:nth-child(4){grid-column:2/4}
+
+.wi-bg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;
+  transition:transform .9s var(--ease),filter .9s var(--ease);
+  filter:brightness(.65) saturate(.7);
+}
+/* Unique gradient per card */
+.wi:nth-child(1) .wi-bg{background:radial-gradient(ellipse at 40% 60%,#1a1232 0%,#0a0812 100%)}
+.wi:nth-child(2) .wi-bg{background:radial-gradient(ellipse at 60% 40%,#1c1006 0%,#0a0812 100%)}
+.wi:nth-child(3) .wi-bg{background:radial-gradient(ellipse at 30% 70%,#0b1a1c 0%,#0a0812 100%)}
+.wi:nth-child(4) .wi-bg{background:linear-gradient(135deg,#140d1f 0%,#0d1a10 50%,#1a0d0d 100%)}
+
+.wi:hover .wi-bg{transform:scale(1.07);filter:brightness(.85) saturate(1)}
+
+.wi-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(5,4,10,.95) 0%,rgba(5,4,10,.1) 50%,transparent 100%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:28px;transition:background .5s;
+}
+.wi:hover .wi-overlay{
+  background:linear-gradient(to top,rgba(5,4,10,.98) 0%,rgba(5,4,10,.3) 60%,transparent 100%);
+}
+
+.wi-cat{
+  font-size:.58rem;font-weight:500;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.wi-title{
+  font-family:var(--font-serif);font-size:1.15rem;
+  font-weight:700;color:var(--ivory);
+  line-height:1.2;
+}
+.wi:nth-child(1) .wi-title{font-size:clamp(1.2rem,2vw,1.7rem)}
+
+.wi-play{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) scale(.7);
+  width:60px;height:60px;z-index:2;
+  border:1px solid rgba(255,255,255,.25);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.2);backdrop-filter:blur(8px);
+  opacity:0;transition:all .4s var(--ease);
+}
+.wi:hover .wi-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.wi-play svg{color:white;margin-left:4px}
+
+/* ══════════════════════════════
+   ABOUT
+══════════════════════════════ */
+#about{
+  padding:120px var(--pad);
+  background:var(--deep);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+
+.about-portrait-wrap{position:relative}
+.portrait{
+  width:100%;aspect-ratio:3/4;
+  background:var(--surface);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.portrait-ph{
+  font-size:6rem;opacity:.25;
+  position:relative;z-index:1;
+}
+/* Subtle gradient sheen on portrait */
+.portrait::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(200,170,90,.05) 0%,transparent 50%);
+}
+/* Floating border decoration */
+.portrait-frame-deco{
+  position:absolute;
+  bottom:-18px;right:-18px;
+  width:80%;height:80%;
+  border:1px solid var(--border-bright);
+  pointer-events:none;
+}
+.portrait-frame-deco2{
+  position:absolute;
+  top:-18px;left:-18px;
+  width:40%;height:40%;
+  border:1px solid var(--border);
+  pointer-events:none;
+}
+
+.about-text .body-text{margin-top:20px;margin-bottom:0;max-width:unset}
+.about-text .body-text+.body-text{margin-top:16px}
+
+.about-badges{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:36px;
+}
+.badge{
+  font-size:.62rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--border-bright);
+  padding:7px 18px;
+  transition:all .3s;
+}
+.badge:hover{background:var(--gold-dim);border-color:var(--gold)}
+
+.about-details{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;margin-top:40px;
+}
+.adetail{
+  padding-left:16px;border-left:2px solid var(--gold);
+}
+.adetail-label{
+  font-size:.58rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:4px;
+}
+.adetail-val{font-size:.9rem;color:var(--ivory)}
+
+/* ══════════════════════════════
+   PRICING
+══════════════════════════════ */
+#pricing{
+  padding:120px var(--pad);
+  position:relative;overflow:hidden;
+}
+
+.pricing-tabs{
+  display:flex;gap:2px;margin-bottom:56px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:0;flex-wrap:wrap;
+}
+.ptab{
+  font-size:.65rem;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);background:none;border:none;
+  padding:12px 24px;cursor:pointer;
+  position:relative;transition:color .3s;
+}
+.ptab::after{
+  content:'';position:absolute;bottom:-1px;left:0;right:0;
+  height:2px;background:var(--gold);
+  transform:scaleX(0);transition:transform .35s var(--ease);
+}
+.ptab:hover{color:var(--text)}
+.ptab.active{color:var(--gold)}
+.ptab.active::after{transform:scaleX(1)}
+
+.pricing-panel{display:none}
+.pricing-panel.active{display:block}
+
+/* Reel / Wedding grids */
+.p-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1px;background:var(--border);
+}
+.pcard{
+  background:var(--surface);padding:44px 36px;
+  position:relative;transition:background .35s;
+  display:flex;flex-direction:column;
+}
+.pcard.featured{background:var(--raised)}
+.pcard:hover{background:var(--raised)}
+
+.pcard-badge{
+  position:absolute;top:0;right:24px;
+  background:var(--gold);color:var(--void);
+  font-size:.52rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  padding:5px 14px;
+}
+
+.ptier{
+  font-size:.58rem;font-weight:500;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+.pname{
+  font-family:var(--font-serif);font-size:1.3rem;
+  font-weight:700;color:var(--ivory);margin-bottom:20px;
+}
+.pprice{
+  font-family:var(--font-cinzel);
+  font-size:2.8rem;color:var(--gold);
+  line-height:1;margin-bottom:6px;
+}
+.pprice-note{
+  font-size:.7rem;color:var(--muted);
+  margin-bottom:28px;letter-spacing:.1em;
+}
+.pfeatures{
+  list-style:none;display:flex;flex-direction:column;
+  gap:11px;flex:1;
+}
+.pfeatures li{
+  display:flex;gap:10px;
+  font-size:.8rem;color:var(--muted);line-height:1.5;
+  align-items:flex-start;
+}
+.pfeatures li::before{
+  content:'—';color:var(--gold);
+  flex-shrink:0;font-size:.7rem;margin-top:2px;
+}
+.pcard .btn{margin-top:32px;align-self:flex-start}
+
+/* Commercial */
+.comm-wrap{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.comm-card{
+  background:var(--surface);border:1px solid var(--border);
+  padding:40px 32px;position:relative;
+  transition:border-color .35s,transform .35s var(--ease);
+}
+.comm-card.prem{
+  border-color:var(--border-bright);
+  background:var(--raised);
+}
+.comm-card:hover{border-color:var(--border-bright);transform:translateY(-4px)}
+.comm-tier{
+  font-family:var(--font-cinzel);font-size:1.3rem;
+  color:var(--gold);margin-bottom:28px;
+  padding-bottom:20px;border-bottom:1px solid var(--border);
+  letter-spacing:.08em;
+}
+.comm-feat{
+  list-style:none;display:flex;flex-direction:column;gap:13px;
+}
+.comm-feat li{
+  font-size:.82rem;color:var(--muted);
+  display:flex;gap:10px;align-items:flex-start;
+  line-height:1.5;
+}
+.comm-feat li::before{content:'▸';color:var(--gold);flex-shrink:0}
+.comm-feat .gift::before{content:'🎁';font-size:.8rem}
+.comm-card .btn{margin-top:32px}
+
+/* Design services */
+.design-strip{
+  background:var(--surface);border:1px solid var(--border);
+  padding:48px;
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:32px;
+}
+.design-strip h3{
+  font-family:var(--font-serif);font-size:1.5rem;
+  font-weight:700;color:var(--ivory);margin-bottom:10px;
+}
+.design-strip p{font-size:.84rem;color:var(--muted);margin-bottom:20px}
+.design-tags{display:flex;flex-wrap:wrap;gap:8px}
+.dtag{
+  font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--border-bright);
+  padding:6px 14px;
+}
+.price-big{
+  text-align:right;
+}
+.price-big .pprice{font-size:3.5rem}
+.price-big .pprice-note{margin-bottom:20px}
+
+/* ══════════════════════════════
+   PORTFOLIO / GALLERY
+══════════════════════════════ */
+#portfolio{
+  padding:120px var(--pad);
+  background:var(--deep);
+  border-top:1px solid var(--border);
+}
+
+.filter-bar{
+  display:flex;gap:4px;flex-wrap:wrap;
+  margin-bottom:48px;
+}
+.fbtn{
+  font-size:.62rem;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);background:none;
+  border:1px solid var(--border);padding:10px 22px;
+  cursor:pointer;transition:all .3s;
+}
+.fbtn:hover{color:var(--text);border-color:var(--border-bright)}
+.fbtn.active{color:var(--void);background:var(--gold);border-color:var(--gold)}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:10px;
+}
+.gitem{
+  position:relative;overflow:hidden;
+  aspect-ratio:4/3;background:var(--surface);
+  cursor:pointer;
+  transition:opacity .4s,transform .4s var(--ease);
+}
+.gitem.hiding{opacity:0;transform:scale(.94);pointer-events:none}
+.gitem.showing{animation:gShow .5s var(--ease) forwards}
+@keyframes gShow{
+  from{opacity:0;transform:scale(.94)}
+  to{opacity:1;transform:scale(1)}
+}
+
+.g-bg{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+  transition:transform .8s var(--ease),filter .8s;
+  filter:brightness(.6) saturate(.8);
+}
+.gitem:hover .g-bg{transform:scale(1.08);filter:brightness(.8) saturate(1)}
+
+/* unique bg per category */
+.gitem[data-cat="wedding"] .g-bg{background:radial-gradient(ellipse at center,#1a0e30 0%,#0a0812 100%)}
+.gitem[data-cat="reels"] .g-bg{background:radial-gradient(ellipse at center,#0f1c10 0%,#05040a 100%)}
+.gitem[data-cat="commercial"] .g-bg{background:radial-gradient(ellipse at center,#1c1106 0%,#0a0812 100%)}
+.gitem[data-cat="events"] .g-bg{background:radial-gradient(ellipse at center,#06141c 0%,#05040a 100%)}
+
+.g-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(5,4,10,.9) 0%,transparent 55%);
+  opacity:0;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:20px;
+  transition:opacity .4s;
+}
+.gitem:hover .g-overlay{opacity:1}
+.g-cat{
+  font-size:.58rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:6px;
+}
+.g-title{
+  font-family:var(--font-serif);font-size:1rem;
+  font-weight:700;color:var(--ivory);
+}
+
+/* ══════════════════════════════
+   TESTIMONIALS
+══════════════════════════════ */
+#testimonials{
+  padding:120px var(--pad);
+  position:relative;overflow:hidden;
+}
+#testimonials::before{
+  content:'"';
+  position:absolute;top:-20px;left:calc(var(--pad)*.5);
+  font-family:var(--font-serif);font-size:30rem;
+  color:rgba(200,170,90,.025);line-height:1;
+  pointer-events:none;font-weight:900;
+}
+
+.testi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:20px;margin-top:72px;
+}
+.tcard{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:40px;
+  position:relative;overflow:hidden;
+  transition:border-color .4s,transform .4s var(--ease);
+}
+.tcard::before{
+  content:'';position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at top left,rgba(200,170,90,.05) 0%,transparent 60%);
+  opacity:0;transition:opacity .4s;
+}
+.tcard:hover{border-color:var(--border-bright);transform:translateY(-4px)}
+.tcard:hover::before{opacity:1}
+
+.tcard-stars{
+  display:flex;gap:3px;margin-bottom:20px;
+}
+.tcard-stars span{color:var(--gold);font-size:.85rem}
+
+.tcard-text{
+  font-family:var(--font-serif);
+  font-size:1rem;font-style:italic;
+  font-weight:400;color:var(--text);
+  line-height:1.75;margin-bottom:28px;
+}
+.tcard-author{
+  display:flex;align-items:center;gap:14px;
+  padding-top:20px;border-top:1px solid var(--border);
+}
+.tcard-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--raised);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-cinzel);font-size:1rem;color:var(--gold);
+  flex-shrink:0;border:1px solid var(--border-bright);
+}
+.tcard-name{font-size:.85rem;font-weight:500;color:var(--ivory)}
+.tcard-role{font-size:.68rem;color:var(--muted);margin-top:2px;letter-spacing:.08em}
+
+/* ══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+#contact{
+  padding:120px var(--pad);
+  background:var(--deep);
+  border-top:1px solid var(--border);
+  display:grid;grid-template-columns:1fr 1.1fr;
+  gap:80px;
+}
+
+.contact-info h2{
+  font-family:var(--font-serif);
+  font-size:clamp(1.8rem,3.5vw,3rem);
+  font-weight:700;color:var(--ivory);
+  margin-bottom:16px;line-height:1.15;
+}
+.contact-info h2 em{font-style:italic;color:var(--gold)}
+.contact-info .body-text{margin-bottom:48px}
+
+.cdetails{display:flex;flex-direction:column;gap:24px;margin-bottom:40px}
+.cdetail{display:flex;gap:16px;align-items:flex-start}
+.cdetail-icon{
+  width:44px;height:44px;
+  border:1px solid var(--border-bright);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;flex-shrink:0;color:var(--gold);
+}
+.cdetail-label{
+  font-size:.58rem;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:4px;
+}
+.cdetail-val{font-size:.9rem;color:var(--ivory)}
+.cdetail-val a{color:var(--ivory);text-decoration:none;transition:color .3s}
+.cdetail-val a:hover{color:var(--gold)}
+
+.wa-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:.68rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;background:#25D366;
+  padding:14px 32px;text-decoration:none;
+  transition:all .35s var(--ease);
+  clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+}
+.wa-btn:hover{background:#1ebc58;box-shadow:0 0 40px rgba(37,211,102,.25);transform:translateY(-2px)}
+
+/* Form */
+.cform-wrap{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:48px 44px;
+}
+.cform-wrap h3{
+  font-family:var(--font-serif);font-size:1.6rem;
+  font-weight:700;color:var(--ivory);
+  margin-bottom:32px;
+}
+
+.fgroup{margin-bottom:22px}
+.fgroup label{
+  display:block;font-size:.58rem;font-weight:400;
+  letter-spacing:.25em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;
+}
+.fgroup input,
+.fgroup select,
+.fgroup textarea{
+  width:100%;
+  background:var(--deep);
+  border:1px solid var(--border);
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:.88rem;font-weight:300;
+  padding:13px 16px;
+  outline:none;
+  transition:border-color .3s;
+  -webkit-appearance:none;
+  border-radius:0;
+}
+.fgroup input:focus,
+.fgroup select:focus,
+.fgroup textarea:focus{border-color:var(--gold)}
+.fgroup textarea{resize:vertical;min-height:110px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-success{
+  display:none;text-align:center;padding:20px;
+  font-family:var(--font-serif);font-size:1.1rem;
+  font-style:italic;color:var(--gold);
+}
+
+/* ══════════════════════════════
+   INSTAGRAM STRIP
+══════════════════════════════ */
+#instagram{
+  padding:80px var(--pad);
+}
+.insta-top{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;flex-wrap:wrap;gap:20px;
+  margin-bottom:32px;
+}
+.insta-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:6px;
+}
+.iitem{
+  aspect-ratio:1;background:var(--surface);
+  position:relative;overflow:hidden;cursor:pointer;
+}
+.iitem-ph{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;
+  transition:transform .6s var(--ease),filter .6s;
+  filter:saturate(.6) brightness(.7);
+  background:linear-gradient(135deg,var(--surface),var(--raised));
+}
+.iitem:hover .iitem-ph{transform:scale(1.1);filter:saturate(1) brightness(.9)}
+.iitem-hover{
+  position:absolute;inset:0;
+  background:rgba(200,170,90,.12);
+  opacity:0;transition:opacity .35s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+}
+.iitem:hover .iitem-hover{opacity:1}
+
+/* ══════════════════════════════
+   CTA BAND
+══════════════════════════════ */
+.cta-band{
+  padding:100px var(--pad);
+  text-align:center;position:relative;overflow:hidden;
+  border-top:1px solid var(--border);
+  background:var(--deep);
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 70% at center,rgba(200,170,90,.06) 0%,transparent 70%);
+}
+.cta-band h2{
+  font-family:var(--font-serif);
+  font-size:clamp(2rem,4.5vw,4rem);
+  font-weight:700;color:var(--ivory);
+  margin-bottom:16px;position:relative;
+}
+.cta-band h2 em{font-style:italic;color:var(--gold)}
+.cta-band p{
+  font-size:.92rem;color:var(--muted);
+  max-width:48ch;margin:0 auto 44px;
+  position:relative;
+}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+footer{
+  background:var(--void);
+  border-top:1px solid var(--border);
+  padding:80px var(--pad) 40px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1.5fr;
+  gap:60px;margin-bottom:60px;
+}
+.footer-brand-name{
+  font-family:var(--font-cinzel);
+  font-size:2rem;letter-spacing:.2em;
+  color:var(--gold);margin-bottom:16px;
+}
+.footer-tagline{
+  font-size:.82rem;color:var(--muted);
+  line-height:1.8;max-width:260px;
+}
+.footer-socials{display:flex;gap:10px;margin-top:24px}
+.fsoc{
+  width:38px;height:38px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;color:var(--muted);
+  text-decoration:none;transition:all .3s;
+}
+.fsoc:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+
+.footer-col h4{
+  font-size:.58rem;font-weight:500;
+  letter-spacing:.35em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:22px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col ul a{
+  font-size:.82rem;color:var(--muted);
+  text-decoration:none;transition:color .3s;
+}
+.footer-col ul a:hover{color:var(--ivory)}
+
+.footer-contact p{
+  font-size:.82rem;color:var(--muted);line-height:1.9;
+}
+.footer-contact a{color:var(--gold);text-decoration:none}
+
+.footer-bottom{
+  padding-top:36px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:14px;
+}
+.footer-bottom p{font-size:.72rem;color:var(--muted)}
+
+/* ══════════════════════════════
+   LIGHTBOX
+══════════════════════════════ */
+#lightbox{
+  position:fixed;inset:0;z-index:8000;
+  background:rgba(5,4,10,.97);
+  backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .4s;
+}
+#lightbox.open{opacity:1;pointer-events:all}
+.lb-content{
+  position:relative;max-width:88vw;max-height:88vh;
+  transform:scale(.88);transition:transform .5s var(--ease);
+  display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+#lightbox.open .lb-content{transform:scale(1)}
+.lb-inner{
+  width:min(800px,80vw);height:min(520px,70vh);
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:16px;
+}
+.lb-inner .lbi-icon{font-size:4rem;opacity:.5}
+.lb-inner .lbi-title{
+  font-family:var(--font-serif);font-size:1.3rem;
+  font-weight:700;color:var(--ivory);
+}
+.lb-inner .lbi-cat{
+  font-size:.6rem;letter-spacing:.3em;
+  text-transform:uppercase;color:var(--gold);
+}
+.lb-inner .lbi-note{font-size:.78rem;color:var(--muted);margin-top:8px}
+.lb-inner img,.lb-inner video{
+  max-width:100%;
+  max-height:48vh;
+  object-fit:contain;
+}
+.lb-close{
+  position:absolute;top:-48px;right:0;
+  width:38px;height:38px;background:none;
+  border:1px solid var(--border-bright);color:var(--text);
+  font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+.lb-close:hover{background:var(--gold);color:var(--void);border-color:var(--gold)}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:1100px){
+  .svc-grid{grid-template-columns:repeat(3,1fr)}
+  .work-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto;
+  }
+  .wi:nth-child(1){grid-row:auto;grid-column:span 2}
+  .wi:nth-child(4){grid-column:span 2}
+  #about{grid-template-columns:1fr;gap:48px}
+  .portrait{max-width:380px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:40px}
+  .comm-wrap{grid-template-columns:1fr}
+  #contact{grid-template-columns:1fr;gap:48px}
+}
+
+@media(max-width:768px){
+  :root{--nav-h:60px;--pad:clamp(20px,5vw,40px)}
+  body{cursor:auto}
+  #cur-dot,#cur-ring{display:none}
+  .nav-links,.nav-book{display:none}
+  .ham{display:flex}
+  #hero{grid-template-columns:1fr;padding-bottom:80px}
+  .hero-right{display:none}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .work-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .wi:nth-child(1){grid-column:auto;grid-row:auto}
+  .wi:nth-child(4){grid-column:auto}
+  .wi{min-height:220px}
+  .footer-grid{grid-template-columns:1fr;gap:32px}
+  .insta-grid{grid-template-columns:repeat(3,1fr)}
+  .design-strip{flex-direction:column}
+  .price-big{text-align:left}
+  .testi-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .hero-ctas{flex-direction:column}
+  .cta-btns{flex-direction:column;align-items:center}
+}
+
+@media(max-width:480px){
+  .svc-grid{grid-template-columns:1fr}
+  .insta-grid{grid-template-columns:repeat(2,1fr)}
+  .p-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ── Cursor ── -->
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- ══════════════════════════════
+     LOADER
+══════════════════════════════ -->
+<div id="loader">
+  <div class="ld-logo">SP FILMS</div>
+  <div class="ld-line"></div>
+  <div class="ld-sub">Subham Prusty · Cinematic Studio</div>
+</div>
+
+<!-- ══════════════════════════════
+     NAVIGATION
+══════════════════════════════ -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">BrotherX<span>FILMS · EST. 2026</span></a>
+
+  <ul class="nav-links">
+    <li><a href="#work" class="active">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#portfolio">Gallery</a></li>
+    <li><a href="#contact" class="nav-book">Book Now</a></li>
+  </ul>
+
+  <button class="ham" id="ham" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="drawer" id="drawer">
+  <a href="#work" class="d-link">Work</a>
+  <a href="#about" class="d-link">About</a>
+  <a href="#services" class="d-link">Services</a>
+  <a href="#pricing" class="d-link">Pricing</a>
+  <a href="#portfolio" class="d-link">Gallery</a>
+  <a href="#contact" class="d-link">Contact</a>
+</div>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-lines"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Cinematic · Visual · Storytelling</div>
+
+    <h1 class="hero-name">
+      <span class="stroke">SUBHAM</span><br>
+      <span class="gold">PRUSTY</span>
+    </h1>
+
+    <p class="hero-tagline">Professional Video Editor &amp; Studio Owner</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">Crafting cinematic stories from Hinjilicut, Odisha. Wedding films, commercial reels, invitation videos — every frame intentional, every edit emotional.</p>
+
+    <div class="hero-ctas">
+      <a href="#work" class="btn btn-gold">
+        <span>View Work</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost">Book a Session</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-deco">S</div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">200+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years of Craft</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     TICKER
+══════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" id="ticker-inner">
+    <span class="ticker-item">Wedding Films<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Cinematic Reels<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Commercial Shoots<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Invitation Videos<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Instagram Content<span class="ticker-sep"></span></span>
+    <span class="ticker-item">YouTube Editing<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Event Coverage<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Colour Grading<span class="ticker-sep"></span></span>
+    <!-- Duplicated for seamless loop -->
+    <span class="ticker-item">Wedding Films<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Cinematic Reels<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Commercial Shoots<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Invitation Videos<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Instagram Content<span class="ticker-sep"></span></span>
+    <span class="ticker-item">YouTube Editing<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Event Coverage<span class="ticker-sep"></span></span>
+    <span class="ticker-item">Colour Grading<span class="ticker-sep"></span></span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     FEATURED WORK
+══════════════════════════════ -->
+<section id="work">
+  <div class="work-header">
+    <div data-reveal>
+      <p class="eyebrow">Selected Projects</p>
+      <h2 class="display">Featured <em>Work</em></h2>
+    </div>
+    <a href="#portfolio" class="btn btn-ghost" data-reveal="right">View Full Gallery</a>
+  </div>
+
+  <div class="work-grid" data-reveal="scale" id="featured-work-grid"></div>
+</section>
+
+<!-- ══════════════════════════════
+     SERVICES
+══════════════════════════════ -->
+<section id="services">
+  <div class="svc-header">
+    <div data-reveal>
+      <p class="eyebrow">What We Offer</p>
+      <h2 class="display">Our <em>Services</em></h2>
+    </div>
+    <a href="#contact" class="btn btn-ghost" data-reveal="right">Start a Project</a>
+  </div>
+
+  <div class="svc-grid" data-reveal>
+    <div class="svc-card">
+      <span class="svc-num">01</span>
+      <span class="svc-icon">🎬</span>
+      <h3 class="svc-name">Video Editing</h3>
+      <p class="svc-desc">Professional post-production with cinematic colour grading, sound design, and seamless transitions.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-num">02</span>
+      <span class="svc-icon">💍</span>
+      <h3 class="svc-name">Wedding Films</h3>
+      <p class="svc-desc">Timeless cinematic wedding films from traditional documentaries to full feature-length productions.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-num">03</span>
+      <span class="svc-icon">📱</span>
+      <h3 class="svc-name">Reels & Content</h3>
+      <p class="svc-desc">Scroll-stopping Instagram reels optimised for engagement, reach, and brand storytelling.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-num">04</span>
+      <span class="svc-icon">🏢</span>
+      <h3 class="svc-name">Commercial Shoots</h3>
+      <p class="svc-desc">High-impact ad films and brand content that drive results and elevate your business presence.</p>
+    </div>
+    <div class="svc-card">
+      <span class="svc-num">05</span>
+      <span class="svc-icon">✉️</span>
+      <h3 class="svc-name">Invitation Videos</h3>
+      <p class="svc-desc">Elegant digital invitations for weddings, events, and special occasions. WhatsApp-ready formats.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     ABOUT
+══════════════════════════════ -->
+<section id="about">
+  <div class="about-portrait-wrap" data-reveal="left">
+    <div class="portrait">
+      <div class="portrait-ph"><img src="subham.jpg" alt="Subham Prusty"></div>
+    </div>
+    <div class="portrait-frame-deco"></div>
+    <div class="portrait-frame-deco2"></div>
+  </div>
+
+  <div class="about-text" data-reveal="right">
+    <p class="eyebrow">The Person Behind the Lens</p>
+    <h2 class="display" style="margin-bottom:28px">Passion Meets <em>Craft</em></h2>
+
+    <p class="body-text">I'm <strong style="color:var(--ivory)">Subham Prusty</strong> — a video editor and studio owner based in Hinjilicut, Odisha, driven by a singular obsession: turning raw footage into unforgettable cinematic experiences.</p>
+
+    <p class="body-text" style="margin-top:16px">With 5+ years of hands-on craft, I've worked on 200+ projects — from intimate wedding films that make families cry happy tears, to high-energy commercial reels that stop the scroll. Every project gets my full attention, creative energy, and technical precision.</p>
+
+    <div class="about-badges">
+      <span class="badge">Wedding Films</span>
+      <span class="badge">Cinematic Reels</span>
+      <span class="badge">Commercial Shoots</span>
+      <span class="badge">Colour Grading</span>
+      <span class="badge">Sound Design</span>
+      <span class="badge">Motion Graphics</span>
+    </div>
+
+    <div class="about-details">
+      <div class="adetail">
+        <div class="adetail-label">Location</div>
+        <div class="adetail-val">Hinjilicut, Odisha</div>
+      </div>
+      <div class="adetail">
+        <div class="adetail-label">Experience</div>
+        <div class="adetail-val">5+ Years</div>
+      </div>
+      <div class="adetail">
+        <div class="adetail-label">Projects Done</div>
+        <div class="adetail-val">200+ Completed</div>
+      </div>
+      <div class="adetail">
+        <div class="adetail-label">Status</div>
+        <div class="adetail-val" style="color:var(--gold)">Open for Bookings</div>
+      </div>
+    </div>
+
+    <div style="margin-top:40px">
+      <a href="#contact" class="btn btn-gold"><span>Work With Me</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     PRICING
+══════════════════════════════ -->
+<section id="pricing">
+  <div data-reveal style="margin-bottom:56px">
+    <p class="eyebrow">Transparent Pricing</p>
+    <h2 class="display">Our <em>Packages</em></h2>
+  </div>
+
+  <div class="pricing-tabs" role="tablist" id="pricing-tabs"></div>
+  <div id="pricing-panels"></div>
+</section>
+
+<!-- ══════════════════════════════
+     GALLERY / PORTFOLIO
+══════════════════════════════ -->
+<section id="portfolio">
+  <div class="work-header">
+    <div data-reveal>
+      <p class="eyebrow">Creative Portfolio</p>
+      <h2 class="display">Our <em>Gallery</em></h2>
+    </div>
+  </div>
+
+  <div class="filter-bar" data-reveal id="gallery-filters"></div>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- ══════════════════════════════
+     TESTIMONIALS
+══════════════════════════════ -->
+<section id="testimonials">
+  <div data-reveal>
+    <p class="eyebrow">Client Stories</p>
+    <h2 class="display">What They <em>Say</em></h2>
+  </div>
+
+  <div class="testi-grid">
+    <div class="tcard" data-reveal>
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-text">"Subham turned our wedding footage into an absolute masterpiece. Every frame tells our love story. We've watched it a hundred times and still cry tears of joy every single time."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">A</div>
+        <div>
+          <div class="tcard-name">Ananya Mishra</div>
+          <div class="tcard-role">Bride · Bhubaneswar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tcard" data-reveal>
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-text">"Our product reel hit 50K views in just 3 days. The cinematic finish made our brand look incredibly premium. Return on investment was off the charts. Highly recommend!"</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">R</div>
+        <div>
+          <div class="tcard-name">Rajan Patel</div>
+          <div class="tcard-role">Business Owner · Berhampur</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tcard" data-reveal>
+      <div class="tcard-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <p class="tcard-text">"Professional, fast, and the quality is insane for the price. My Instagram engagement literally doubled after switching to Subham for all my content. Game-changer."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">S</div>
+        <div>
+          <div class="tcard-name">Sneha Das</div>
+          <div class="tcard-role">Content Creator · Odisha</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     INSTAGRAM PREVIEW
+══════════════════════════════ -->
+<section id="instagram">
+  <div class="insta-top">
+    <div data-reveal>
+      <p class="eyebrow">Follow Along</p>
+      <h2 class="display" style="font-size:clamp(1.6rem,3vw,2.4rem)">Behind the <em>Lens</em></h2>
+    </div>
+    <a href="https://www.instagram.com/subham24____?igsh=MTRuc3V3MHFsYWcycg==" target="_blank" rel="noopener" class="btn btn-ghost" data-reveal="right">@subham.prusty</a>
+  </div>
+
+  <div class="insta-grid" data-reveal>
+    <div class="iitem"><div class="iitem-ph">💍</div><div class="iitem-hover">📸</div></div>
+    <div class="iitem"><div class="iitem-ph">🎬</div><div class="iitem-hover">▶</div></div>
+    <div class="iitem"><div class="iitem-ph">🌅</div><div class="iitem-hover">📸</div></div>
+    <div class="iitem"><div class="iitem-ph">💒</div><div class="iitem-hover">▶</div></div>
+    <div class="iitem"><div class="iitem-ph">✨</div><div class="iitem-hover">📸</div></div>
+    <div class="iitem"><div class="iitem-ph">🎭</div><div class="iitem-hover">▶</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CONTACT
+══════════════════════════════ -->
+<section id="contact">
+  <!-- Info -->
+  <div data-reveal="left">
+    <p class="eyebrow">Get In Touch</p>
+    <h2 class="contact-info" style="font-family:var(--font-serif);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;color:var(--ivory);line-height:1.15;margin-bottom:16px">Ready to create something <em style="font-style:italic;color:var(--gold)">cinematic?</em></h2>
+    <p class="body-text" style="margin-bottom:44px">Whether it's your dream wedding film, a viral reel, or a high-impact brand campaign — reach out and let's make it happen.</p>
+
+    <div class="cdetails">
+      <div class="cdetail">
+        <div class="cdetail-icon">📍</div>
+        <div>
+          <div class="cdetail-label">Location</div>
+          <div class="cdetail-val">Hinjilicut, Ganjam, Odisha, India</div>
+        </div>
+      </div>
+      <div class="cdetail">
+        <div class="cdetail-icon">📞</div>
+        <div>
+          <div class="cdetail-label">Primary Phone</div>
+          <div class="cdetail-val"><a href="tel:+919040690150">+91 90406 90150</a></div>
+        </div>
+      </div>
+      <div class="cdetail">
+        <div class="cdetail-icon">📞</div>
+        <div>
+          <div class="cdetail-label">Alternate Phone</div>
+          <div class="cdetail-val"><a href="tel:+918457995674">+91 84579 95674</a></div>
+        </div>
+      </div>
+      <div class="cdetail">
+        <div class="cdetail-icon">📸</div>
+        <div>
+          <div class="cdetail-label">Instagram</div>
+          <div class="cdetail-val"><a href="https://www.instagram.com/subham24____?igsh=MTRuc3V3MHFsYWcycg==" target="_blank">@subham.prusty</a></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://wa.me/919040690150?text=Hi%20Subham%21%20I%20want%20to%20book%20a%20video%20editing%20service." target="_blank" rel="noopener" class="wa-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chat on WhatsApp
+    </a>
+  </div>
+
+  <!-- Form -->
+  <div data-reveal="right">
+    <div class="cform-wrap">
+      <h3>Send an Inquiry</h3>
+      <!--
+        TO ACTIVATE FORM — Choose one:
+        A) Formspree: add action="https://formspree.io/f/YOUR_ID" method="POST" to the <form> tag
+        B) EmailJS: uncomment the emailjs init below and use emailjs.sendForm()
+      -->
+      <form id="contact-form" novalidate>
+        <div class="frow">
+          <div class="fgroup">
+            <label for="fname">Your Name *</label>
+            <input type="text" id="fname" name="name" placeholder="Rahul Sharma" required/>
+          </div>
+          <div class="fgroup">
+            <label for="fphone">Phone *</label>
+            <input type="tel" id="fphone" name="phone" placeholder="+91 98765 43210" required/>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label for="femail">Email Address</label>
+          <input type="email" id="femail" name="email" placeholder="rahul@example.com"/>
+        </div>
+        <div class="fgroup">
+          <label for="fservice">Service Required *</label>
+          <select id="fservice" name="service" required>
+            <option value="" disabled selected>Choose a service…</option>
+            <option value="wedding">Wedding Film</option>
+            <option value="reel-normal">Normal Reel — ₹800</option>
+            <option value="reel-standard">Standard Reel — ₹1,200</option>
+            <option value="reel-cinematic">Cinematic Reel — ₹1,500</option>
+            <option value="commercial">Commercial Package</option>
+            <option value="invitation">Invitation Video</option>
+            <option value="instagram">Instagram Content</option>
+            <option value="other">Other / Custom</option>
+          </select>
+        </div>
+        <div class="frow">
+          <div class="fgroup">
+            <label for="fdate">Event / Project Date</label>
+            <input type="date" id="fdate" name="date"/>
+          </div>
+          <div class="fgroup">
+            <label for="fbudget">Budget Range</label>
+            <select id="fbudget" name="budget">
+              <option value="" disabled selected>Select range…</option>
+              <option>Under ₹1,000</option>
+              <option>₹1,000 – ₹3,000</option>
+              <option>₹3,000 – ₹5,000</option>
+              <option>₹5,000 – ₹10,000</option>
+              <option>₹10,000+</option>
+            </select>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label for="fmsg">Project Details *</label>
+          <textarea id="fmsg" name="message" placeholder="Tell me about your project — event type, style preference, references, special requirements…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">
+          <span>Send Inquiry</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+        </button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div style="font-size:2.5rem;margin-bottom:12px">✨</div>
+        <div>Thank you! Your inquiry has been received.</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-top:8px">We'll respond within 24 hours. For instant reply, WhatsApp us!</div>
+        <a href="https://wa.me/919040690150" target="_blank" class="wa-btn" style="display:inline-flex;margin-top:20px">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CTA BAND
+══════════════════════════════ -->
+<div class="cta-band">
+  <h2 data-reveal>Ready to tell your <em>story?</em></h2>
+  <p data-reveal>Let's create something extraordinary together — from dream wedding films to viral commercial reels.</p>
+  <div class="cta-btns" data-reveal>
+    <a href="#contact" class="btn btn-gold"><span>Start a Project</span></a>
+    <a href="https://wa.me/919040690150" target="_blank" class="btn btn-ghost">WhatsApp Now</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">SP FILMS</div>
+      <p class="footer-tagline">Crafting cinematic stories that last a lifetime. Based in Hinjilicut, Odisha — serving clients across India.</p>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/subham24____?igsh=MTRuc3V3MHFsYWcycg==" target="_blank" class="fsoc" aria-label="Instagram" title="Instagram">📸</a>
+        <a href="https://wa.me/919040690150" target="_blank" class="fsoc" aria-label="WhatsApp" title="WhatsApp">💬</a>
+        <a href="tel:+919040690150" class="fsoc" aria-label="Phone" title="Call us">📞</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#portfolio">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Wedding Films</a></li>
+        <li><a href="#services">Cinematic Reels</a></li>
+        <li><a href="#services">Commercial Shoots</a></li>
+        <li><a href="#services">Invitation Videos</a></li>
+        <li><a href="#services">Instagram Content</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col footer-contact">
+      <h4>Contact</h4>
+      <p>
+        📍 Hinjilicut, Ganjam, Odisha<br>
+        📞 <a href="tel:+919040690150">+91 90406 90150</a><br>
+        📞 <a href="tel:+918457995674">+91 84579 95674</a><br>
+        💬 <a href="https://wa.me/919040690150" target="_blank">WhatsApp Us</a><br>
+        📸 <a href="https://www.instagram.com/subham24____?igsh=MTRuc3V3MHFsYWcycg==" target="_blank">@subham.prusty</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 Subham Prusty Films · All rights reserved.</p>
+    <p>Designed with 🎬 for cinematic excellence</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════
+     LIGHTBOX
+══════════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Media viewer" onclick="if(event.target===this)closeLb()">
+  <div class="lb-content">
+    <button class="lb-close" onclick="closeLb()" aria-label="Close">✕</button>
+    <div class="lb-inner" id="lb-inner">
+      <div class="lbi-icon" id="lbi-icon"></div>
+      <div class="lbi-cat" id="lbi-cat"></div>
+      <div class="lbi-title" id="lbi-title"></div>
+      <div class="lbi-content" id="lbi-content"></div>
+      <!-- lbi-note removed; content will be filled dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+/* ─ Cursor ──────────────────────── */
+const dot = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+});
+
+(function raf(){
+  rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(raf);
+})();
+
+/* ─ Loader ──────────────────────── */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('out'),1500);
+});
+
+/* ─ Nav scroll ──────────────────── */
+const nav=document.getElementById('main-nav');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',scrollY>80);
+},{passive:true});
+
+/* ─ Hamburger / Drawer ──────────── */
+const ham=document.getElementById('ham');
+const drawer=document.getElementById('drawer');
+ham.addEventListener('click',()=>{
+  ham.classList.toggle('open');
+  drawer.classList.toggle('open');
+  document.body.style.overflow=drawer.classList.contains('open')?'hidden':'';
+});
+drawer.querySelectorAll('a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    ham.classList.remove('open');
+    drawer.classList.remove('open');
+    document.body.style.overflow='';
+  });
+});
+
+/* ─ Scroll Reveal (Intersection Observer) ── */
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const delay=entry.target.getAttribute('data-delay')||0;
+      setTimeout(()=>entry.target.classList.add('visible'),+delay);
+      revealObs.unobserve(entry.target);
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+
+document.querySelectorAll('[data-reveal]').forEach(el=>revealObs.observe(el));
+
+function cap(str){
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+}
+
+function esc(str){
+  return String(str || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
+
+function isVideoUrl(url){
+  return /\.(mp4|webm|ogg|mov)(\?|#|$)/i.test(url) || /\/video\/upload\//i.test(url);
+}
+
+function isImageUrl(url){
+  return /\.(jpg|jpeg|png|gif|webp|svg)(\?|#|$)/i.test(url) || /\/image\/upload\//i.test(url);
+}
+
+const appState = {
+  pricingCategories: [],
+  pricingItems: [],
+  media: [],
+  activePricingTab: '',
+  activeGalleryFilter: 'all'
+};
+
+function renderFeaturedWork(media){
+  const grid = document.getElementById('featured-work-grid');
+  if(!grid) return;
+
+  const items = media.filter(item => item.featured).slice(0, 4);
+  grid.innerHTML = items.map(item => `
+    <div class="wi" data-cat="${esc(item.category)}">
+      <div class="wi-bg">${esc(item.emoji || '🎬')}</div>
+      <div class="wi-overlay">
+        <div class="wi-cat">${esc(cap(item.category))}</div>
+        <div class="wi-title">${esc(item.title)}</div>
+      </div>
+      <div class="wi-play">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('.wi').forEach((card, index)=>{
+    card.addEventListener('click',()=>openLb(items[index]));
+  });
+}
+
+function renderPricing(){
+  const tabsRoot = document.getElementById('pricing-tabs');
+  const panelsRoot = document.getElementById('pricing-panels');
+  const categories = appState.pricingCategories;
+  const items = appState.pricingItems;
+
+  if(!categories.length){
+    tabsRoot.innerHTML = '';
+    panelsRoot.innerHTML = '<div class="pricing-panel active"><div class="design-strip"><div><h3>Pricing will be updated soon.</h3><p>Please contact us directly for the latest packages.</p></div><div class="price-big"><a href="#contact" class="btn btn-gold"><span>Contact Now</span></a></div></div></div>';
+    return;
+  }
+
+  if(!appState.activePricingTab || !categories.some(category => category.id === appState.activePricingTab)){
+    appState.activePricingTab = categories[0].id;
+  }
+
+  tabsRoot.innerHTML = categories.map(category => `
+    <button class="ptab ${category.id === appState.activePricingTab ? 'active' : ''}" data-tab="${esc(category.id)}" role="tab">
+      ${esc(category.icon || '🎬')} ${esc(category.label)}
+    </button>
+  `).join('');
+
+  panelsRoot.innerHTML = categories.map(category => {
+    const panelItems = items.filter(item => item.categoryId === category.id);
+    let inner = '';
+
+    if(category.layout === 'commercial'){
+      inner = `<div class="comm-wrap">${panelItems.map(item => `
+        <div class="comm-card ${item.featured ? 'prem' : ''}">
+          ${item.badge ? `<div style="position:absolute;top:0;right:0;background:var(--gold);color:var(--void);font-size:.52rem;font-weight:700;letter-spacing:.2em;padding:6px 18px">${esc(item.badge)}</div>` : ''}
+          <div class="comm-tier">${esc(item.tier || item.name)}</div>
+          <ul class="comm-feat">
+            ${(item.features || []).map(feature => `<li class="${feature.toLowerCase().includes('special gift') ? 'gift' : ''}">${esc(feature)}</li>`).join('')}
+          </ul>
+          <a href="${esc(item.ctaLink || '#contact')}" class="btn ${item.featured ? 'btn-gold' : 'btn-ghost'}">${item.featured ? `<span>${esc(item.ctaLabel || 'Get Quote')}</span>` : esc(item.ctaLabel || 'Get Quote')}</a>
+        </div>
+      `).join('')}</div>`;
+    } else if(category.layout === 'design' && panelItems[0]){
+      const item = panelItems[0];
+      inner = `
+        <div class="design-strip">
+          <div>
+            <h3>${esc(item.name).replace(/·/g,'·')}</h3>
+            <p>${esc(item.description || 'Professional design support for social content and invitations.')}</p>
+            <div class="design-tags">
+              ${(item.features || []).map(feature => `<span class="dtag">${esc(feature)}</span>`).join('')}
+            </div>
+          </div>
+          <div class="price-big">
+            <div class="pprice">${esc(item.price || 'Custom')}</div>
+            <div class="pprice-note">${esc(item.priceNote || '')}</div>
+            <a href="${esc(item.ctaLink || '#contact')}" class="btn btn-gold"><span>${esc(item.ctaLabel || 'Order Now')}</span></a>
+          </div>
+        </div>`;
+    } else {
+      inner = `<div class="p-grid">${panelItems.map(item => `
+        <div class="pcard ${item.featured ? 'featured' : ''}">
+          ${item.badge ? `<div class="pcard-badge">${esc(item.badge)}</div>` : ''}
+          <div class="ptier">${esc(item.tier || '')}</div>
+          <div class="pname">${esc(item.name)}</div>
+          <div class="pprice">${esc(item.price || 'Custom')}</div>
+          <div class="pprice-note">${esc(item.priceNote || '')}</div>
+          <ul class="pfeatures">
+            ${(item.features || []).map(feature => `<li>${esc(feature)}</li>`).join('')}
+          </ul>
+          <a href="${esc(item.ctaLink || '#contact')}" class="btn ${item.featured ? 'btn-gold' : 'btn-ghost'}">${item.featured ? `<span>${esc(item.ctaLabel || 'Book This')}</span>` : esc(item.ctaLabel || 'Book This')}</a>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    return `<div class="pricing-panel ${category.id === appState.activePricingTab ? 'active' : ''}" id="panel-${esc(category.id)}">${inner}</div>`;
+  }).join('');
+
+  tabsRoot.querySelectorAll('.ptab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      appState.activePricingTab = tab.getAttribute('data-tab');
+      renderPricing();
+    });
+  });
+
+  renderServiceOptions();
+}
+
+function renderGalleryFilters(){
+  const root = document.getElementById('gallery-filters');
+  const categories = [...new Set(appState.media.map(item => item.category).filter(Boolean))];
+  const filters = ['all', ...categories];
+
+  root.innerHTML = filters.map(filter => `
+    <button class="fbtn ${filter === appState.activeGalleryFilter ? 'active' : ''}" data-filter="${esc(filter)}">
+      ${filter === 'all' ? 'All Work' : esc(cap(filter))}
+    </button>
+  `).join('');
+
+  root.querySelectorAll('.fbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      appState.activeGalleryFilter = btn.getAttribute('data-filter');
+      renderGalleryFilters();
+      renderGallery();
+    });
+  });
+}
+
+function renderGallery(){
+  const gallery = document.getElementById('gallery');
+  if(!gallery) return;
+
+  const items = appState.media.filter(item => appState.activeGalleryFilter === 'all' || item.category === appState.activeGalleryFilter);
+  gallery.innerHTML = items.map(item => `
+    <div class="gitem showing" data-cat="${esc(item.category)}">
+      <div class="g-bg">${esc(item.emoji || '🎬')}</div>
+      <div class="g-overlay">
+        <div class="g-cat">${esc(cap(item.category))}</div>
+        <div class="g-title">${esc(item.title)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  gallery.querySelectorAll('.gitem').forEach((card, index)=>{
+    card.addEventListener('click',()=>openLb(items[index]));
+  });
+}
+
+function renderServiceOptions(){
+  const select = document.getElementById('fservice');
+  if(!select) return;
+
+  const options = [];
+  appState.pricingItems.forEach(item=>{
+    options.push({
+      value: item.id,
+      label: item.price ? `${item.name} — ${item.price}` : item.name
+    });
+  });
+
+  select.innerHTML = `
+    <option value="" disabled selected>Choose a service…</option>
+    ${options.map(option => `<option value="${esc(option.value)}">${esc(option.label)}</option>`).join('')}
+    <option value="other">Other / Custom</option>
+  `;
+}
+
+async function loadContent(){
+  try {
+    const res = await fetch('/api/content');
+    const data = await res.json();
+    appState.pricingCategories = data.pricingCategories || [];
+    appState.pricingItems = data.pricingItems || [];
+    appState.media = data.media || [];
+    renderFeaturedWork(appState.media);
+    renderPricing();
+    renderGalleryFilters();
+    renderGallery();
+  } catch(err){
+    console.error('failed to load content', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadContent);
+
+/* ─ Lightbox ────────────────────── */
+// openLb now accepts either individual args (legacy) or an item object
+function openLb(arg1,arg2,arg3){
+  let item;
+  if(typeof arg1==='object'){
+    item=arg1;
+  } else {
+    item={category:arg1, emoji:arg2, title:arg3};
+  }
+
+  document.getElementById('lbi-icon').textContent=item.emoji||'';
+  document.getElementById('lbi-cat').textContent=
+    item.category ? item.category.charAt(0).toUpperCase()+item.category.slice(1) : '';
+  document.getElementById('lbi-title').textContent=item.title||'';
+
+  const content = document.getElementById('lbi-content');
+  if(item.filename){
+    const url = '/uploads/' + item.filename;
+    if(url.match(/\.(mp4|webm|ogg|mov)$/i)){
+      content.innerHTML = `<video controls src="${url}"></video>`;
+    } else {
+      content.innerHTML = `<img src="${url}" alt="${item.title || ''}">`;
+    }
+  } else if(item.externalUrl){
+    if(item.resourceType === 'video' || isVideoUrl(item.externalUrl)){
+      content.innerHTML = `<video controls src="${esc(item.externalUrl)}"></video>`;
+    } else if(item.resourceType === 'image' || isImageUrl(item.externalUrl)){
+      content.innerHTML = `<img src="${esc(item.externalUrl)}" alt="${esc(item.title || '')}">`;
+    } else {
+      content.innerHTML = `<p class="lbi-note"><a href="${esc(item.externalUrl)}" target="_blank" rel="noopener" style="color:var(--gold)">Open media link</a></p>`;
+    }
+  } else {
+    content.innerHTML = '<div class="lbi-note">Media preview will be available after you upload a video or image from the admin panel.</div>';
+  }
+
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb()});
+
+/* ─ Contact Form ────────────────── */
+document.getElementById('contact-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();
+  const btn=e.target.querySelector('[type=submit]');
+  const orig=btn.innerHTML;
+  btn.innerHTML='<span>Sending…</span>';
+  btn.disabled=true;
+  const data = new FormData(e.target);
+
+  try{
+    const res = await fetch('/api/contact',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name:data.get('name'),
+        phone:data.get('phone'),
+        email:data.get('email'),
+        service:data.get('service'),
+        date:data.get('date'),
+        budget:data.get('budget'),
+        message:data.get('message')
+      })
+    });
+
+    if(!res.ok){
+      throw new Error('Unable to send inquiry right now.');
+    }
+
+    e.target.style.display='none';
+    document.getElementById('form-success').style.display='block';
+  } catch(error){
+    alert(error.message || 'Please try again or contact on WhatsApp.');
+    btn.innerHTML=orig;
+    btn.disabled=false;
+  }
+});
+
+/* ─ Smooth anchor scroll ─────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+});
+
+/* ─ Parallax on hero deco ─────────── */
+const heroDeco=document.querySelector('.hero-deco');
+if(heroDeco){
+  window.addEventListener('scroll',()=>{
+    const y=scrollY;
+    heroDeco.style.transform=`translateY(${y*0.12}px)`;
+  },{passive:true});
+}
+</script>
+</body>
+</html>

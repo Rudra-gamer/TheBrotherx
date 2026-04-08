@@ -1,0 +1,21 @@
+{
+  "name": "subham-films-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fullstack portfolio app for Subham Prusty with admin panel",
+  "main": "netlify/functions/api.mjs",
+  "scripts": {
+    "check": "node --check netlify/functions/_lib/app.mjs && node --check netlify/functions/api.mjs && node --check scripts/build-netlify.cjs",
+    "build:netlify": "node scripts/build-netlify.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.0.11"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
