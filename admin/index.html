@@ -76,7 +76,7 @@
         <form id="login-form" class="stack">
           <div>
             <label for="username">Username</label>
-            <input id="username" name="username" value="admin" autocomplete="username" />
+            <input id="username" name="username" placeholder="Enter your username" autocomplete="username" />
           </div>
           <div>
             <label for="password">Password</label>
@@ -503,7 +503,6 @@
           })
         });
         event.currentTarget.reset();
-        document.getElementById('username').value = 'admin';
         setStatus('login-status', '');
         await checkSession();
       } catch (error) {
