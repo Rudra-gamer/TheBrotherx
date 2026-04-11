@@ -599,6 +599,10 @@ nav.scrolled{
   transition:transform .9s var(--ease),filter .9s var(--ease);
   filter:brightness(.65) saturate(.7);
 }
+.wi-bg video{
+  width:100%;height:100%;
+  object-fit:cover;
+}
 /* Unique gradient per card */
 .wi:nth-child(1) .wi-bg{background:radial-gradient(ellipse at 40% 60%,#1a1232 0%,#0a0812 100%)}
 .wi:nth-child(2) .wi-bg{background:radial-gradient(ellipse at 60% 40%,#1c1006 0%,#0a0812 100%)}
@@ -906,6 +910,10 @@ nav.scrolled{
   font-size:3rem;
   transition:transform .8s var(--ease),filter .8s;
   filter:brightness(.6) saturate(.8);
+}
+.g-bg video{
+  width:100%;height:100%;
+  object-fit:cover;
 }
 .gitem:hover .g-bg{transform:scale(1.08);filter:brightness(.8) saturate(1)}
 
@@ -1282,8 +1290,10 @@ footer{
   .hero-right{display:none}
   .svc-grid{grid-template-columns:1fr 1fr}
   .work-grid{grid-template-columns:1fr;grid-template-rows:auto}
-  .wi:nth-child(1){grid-column:auto;grid-row:auto}
-  .wi:nth-child(4){grid-column:auto}
+  .wi:nth-child(1),
+  .wi:nth-child(2),
+  .wi:nth-child(3),
+  .wi:nth-child(4){grid-column:auto;grid-row:auto}
   .wi{min-height:220px}
   .footer-grid{grid-template-columns:1fr;gap:32px}
   .insta-grid{grid-template-columns:repeat(3,1fr)}
@@ -1384,11 +1394,11 @@ footer{
     <div class="hero-deco">S</div>
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-num">200+</div>
+        <div class="stat-num">100+</div>
         <div class="stat-label">Projects Delivered</div>
       </div>
       <div class="stat">
-        <div class="stat-num">5+</div>
+        <div class="stat-num">2+</div>
         <div class="stat-label">Years of Craft</div>
       </div>
       <div class="stat">
@@ -1526,11 +1536,11 @@ footer{
       </div>
       <div class="adetail">
         <div class="adetail-label">Experience</div>
-        <div class="adetail-val">5+ Years</div>
+        <div class="adetail-val">2+ Years</div>
       </div>
       <div class="adetail">
         <div class="adetail-label">Projects Done</div>
-        <div class="adetail-val">200+ Completed</div>
+        <div class="adetail-val">100+ Completed</div>
       </div>
       <div class="adetail">
         <div class="adetail-label">Status</div>
@@ -1928,6 +1938,32 @@ function isImageUrl(url){
   return /\.(jpg|jpeg|png|gif|webp|svg)(\?|#|$)/i.test(url) || /\/image\/upload\//i.test(url);
 }
 
+function getMediaUrl(item){
+  if(item.filename) return '/uploads/' + item.filename;
+  if(item.externalUrl) return item.externalUrl;
+  return '';
+}
+
+function isVideoItem(item){
+  const url = getMediaUrl(item);
+  return Boolean(url) && (item.resourceType === 'video' || isVideoUrl(url));
+}
+
+function renderVideoPreview(item, className = ''){
+  const url = esc(getMediaUrl(item));
+  return `<video${className ? ` class="${className}"` : ''} src="${url}" autoplay muted loop playsinline preload="metadata"></video>`;
+}
+
+function startVideos(root = document){
+  root.querySelectorAll('video[autoplay]').forEach(video=>{
+    video.muted = true;
+    const playPromise = video.play();
+    if(playPromise && typeof playPromise.catch === 'function'){
+      playPromise.catch(()=>{});
+    }
+  });
+}
+
 const appState = {
   pricingCategories: [],
   pricingItems: [],
@@ -1943,7 +1979,7 @@ function renderFeaturedWork(media){
   const items = media.filter(item => item.featured).slice(0, 4);
   grid.innerHTML = items.map(item => `
     <div class="wi" data-cat="${esc(item.category)}">
-      <div class="wi-bg">${esc(item.emoji || '🎬')}</div>
+      <div class="wi-bg">${isVideoItem(item) ? renderVideoPreview(item) : esc(item.emoji || '🎬')}</div>
       <div class="wi-overlay">
         <div class="wi-cat">${esc(cap(item.category))}</div>
         <div class="wi-title">${esc(item.title)}</div>
@@ -1953,6 +1989,7 @@ function renderFeaturedWork(media){
       </div>
     </div>
   `).join('');
+  startVideos(grid);
 
   grid.querySelectorAll('.wi').forEach((card, index)=>{
     card.addEventListener('click',()=>openLb(items[index]));
@@ -2069,13 +2106,14 @@ function renderGallery(){
   const items = appState.media.filter(item => appState.activeGalleryFilter === 'all' || item.category === appState.activeGalleryFilter);
   gallery.innerHTML = items.map(item => `
     <div class="gitem showing" data-cat="${esc(item.category)}">
-      <div class="g-bg">${esc(item.emoji || '🎬')}</div>
+      <div class="g-bg">${isVideoItem(item) ? renderVideoPreview(item) : esc(item.emoji || '🎬')}</div>
       <div class="g-overlay">
         <div class="g-cat">${esc(cap(item.category))}</div>
         <div class="g-title">${esc(item.title)}</div>
       </div>
     </div>
   `).join('');
+  startVideos(gallery);
 
   gallery.querySelectorAll('.gitem').forEach((card, index)=>{
     card.addEventListener('click',()=>openLb(items[index]));
@@ -2138,13 +2176,13 @@ function openLb(arg1,arg2,arg3){
   if(item.filename){
     const url = '/uploads/' + item.filename;
     if(url.match(/\.(mp4|webm|ogg|mov)$/i)){
-      content.innerHTML = `<video controls src="${url}"></video>`;
+      content.innerHTML = `<video controls autoplay muted loop playsinline src="${url}"></video>`;
     } else {
       content.innerHTML = `<img src="${url}" alt="${item.title || ''}">`;
     }
   } else if(item.externalUrl){
     if(item.resourceType === 'video' || isVideoUrl(item.externalUrl)){
-      content.innerHTML = `<video controls src="${esc(item.externalUrl)}"></video>`;
+      content.innerHTML = `<video controls autoplay muted loop playsinline src="${esc(item.externalUrl)}"></video>`;
     } else if(item.resourceType === 'image' || isImageUrl(item.externalUrl)){
       content.innerHTML = `<img src="${esc(item.externalUrl)}" alt="${esc(item.title || '')}">`;
     } else {
@@ -2156,6 +2194,7 @@ function openLb(arg1,arg2,arg3){
 
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
+  startVideos(content);
 }
 function closeLb(){
   document.getElementById('lightbox').classList.remove('open');
